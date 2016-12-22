@@ -1,0 +1,9 @@
+zh-CN:
+  activerecord:
+    models:
+      "fx/user": "分销商"
+    attributes:
+      "fx/user":
+        upgrade_state: 升级状态
+        state: 状态
+        name: 名称

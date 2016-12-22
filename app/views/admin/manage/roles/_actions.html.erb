@@ -1,0 +1,4 @@
+<%= link_to t('show'), [:admin, record], class: 'btn btn-xs btn-success' if can?(:show, record) %>
+<%#= link_to t('copy'), [:new, :admin,model.model_name.singular, {id: record.id}], class: 'btn btn-xs btn-default' if can?(:create, record) %>
+<%= link_to t('edit'), [:edit, :admin, record], class: 'btn btn-xs btn-success' if can?(:update, record) %>
+<%= link_to t('destroy'), [:admin, record], data: {confirm: t('confirm'), method: 'delete'}, class: 'btn btn-xs btn-danger' if can?(:destroy, record) %>

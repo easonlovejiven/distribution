@@ -1,0 +1,95 @@
+<% @record=@user %>
+<% @show = !%w[new edit].include?(params[:action]) && @record.valid? %>
+<div class="modal-header">
+  <%= render "admin/modal/header" %>
+</div>
+<%= render 'admin/shared/prompt' %>
+<%= form_for @user, as: :user, :url => @user.new_record? ? admin_fx_users_path : admin_fx_user_path(@user), :html => {:method => @user.new_record? ? :post : :put, :multipart => true, class: "form-horizontal"} do |f| %>
+    <%#= f.error_messages %>
+    <div class="modal-body">
+      <fieldset>
+        <%= render 'admin/modal/id', {f: f} if @show %>
+
+        <div class="form-group">
+          <%= f.label :name, '名称', class: 'col-md-3 control-label' %>
+          <div class="col-md-4">
+
+            <div class="form-control-static">
+              <%= @user.name %>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :level_id, '等级', class: 'col-md-3 control-label' %>
+          <div class="col-md-4">
+            <% if @show %>
+                <div class="form-control-static">
+                  <%= @record.level.name %>
+                </div>
+            <% else %>
+                <%= f.collection_select :level_id, Fx::Level.active, :id, :name, {:include_blank => '请选择'}, {class: 'form-control'} %>
+            <% end %>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <%= f.label :name, '分销统计', class: 'col-md-3 control-label' %>
+          <div class="col-md-4">
+            <div class="form-control-static">
+              个人总收入: <%= @user.total_amount %>元
+            </div>
+            <div class="form-control-static">
+              个人余额: <%= @user.balance %>元
+            </div>
+            <div class="form-control-static">
+              本月收入: <%= @user.info.current_month_amount %>元
+            </div>
+            <div class="form-control-static">
+              上月收入: <%= @user.info.last_month_amount %>元
+            </div>
+            <div class="form-control-static">
+              ------------------------
+            </div>
+            <div class="form-control-static">
+              个人总返利: <%= @user.info.amount %>元
+            </div>
+            <div class="form-control-static">
+              一级分销商:<%= @user.info.dealer1_count %>个,金额: <%= @user.info.amount1 %>元
+            </div>
+            <div class="form-control-static">
+              二级分销商:<%= @user.info.dealer2_count %>个,金额: <%= @user.info.amount2 %>元
+            </div>
+            <div class="form-control-static">
+              三级分销商:<%= @user.info.dealer3_count %>个,金额: <%= @user.info.amount3 %>元
+            </div>
+          </div>
+        </div>
+
+
+        <% if !@show %>
+            <div class="form-group">
+              <%= f.label :name, '审核', class: 'col-md-3 control-label' %>
+              <div class="col-md-4">
+                <div class="form-control-static">
+                  <% Fx::User::STATE_NAME.each do |state, name| %>
+                      <label><%= f.radio_button(:state, state) %><%= name %></label>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+        <% end %>
+        <% if @show %>
+            <div class="form-actions">
+              <%= link_to '查看', admin_fx_user_path(@user), "data-target" => "rightPanel", class: "btn btn-primary" if can?(:show, @user) %>
+              <%= link_to '编辑', edit_admin_fx_user_path(@user), class: "btn btn-primary" if can?(:update, @user) %>
+              <%= link_to '删除', admin_fx_user_path(@user), method: "destroy", "data-target" => "rightPanel", class: "btn btn-primary" if can?(:destroy, @user) %>
+            </div>
+        <% else %>
+            <%= render 'admin/modal/footer', {f: f} %>
+        <% end %>
+      </fieldset>
+    </div>
+<% end %>
+

@@ -1,0 +1,45 @@
+- image ||= nil
+- unless show
+	= form.hidden_field field
+	= form.file_field field
+	= "(#{image[:width] || '?'}x#{image[:height] || '?'})" if image && (image[:width] || image[:height])
+	= form.hidden_field field, :value => "", :disabled => true
+	= check_box_tag "", '1', false, :onchange => "$(this).prev().attr('disabled', !$(this).attr('checked'));"
+	&nbsp;
+	= label_tag "", t('delete'), :onclick => "$(this).prev().click();"
+	= form.error_message_on field
+.preview(style="color:silver;")
+	- if image
+		= link_to image_tag(form.object.send(field) || "/assets/manage/blank.gif", :alt => "", :style => image.slice(*([:'max-width', :'max-height', image[:'max-width'] ? nil : :width, image[:'max-height'] ? nil : :height].compact)).map { |k, v| %[#{k}: #{v}px;] }.join), image_path(form.object.send(field) || "/assets/manage/blank.gif"), :class => 'image', :rel => 'facebox' if !show || form.object.send(field)
+	- if form.object.send(field) && !form.object.new_record?
+		%div
+			#{t('.file_path')}:&nbsp;
+			= link_to h(form.object.send(field)), image_path(form.object.send(field)), :target => '_blank' if form.object.send(field)
+			%span(style="position:relative;")
+				%span.clipboard(data-href="#{image_path(form.object.send(field))}")= t('copy')
+	- if form.object.respond_to?("#{field}_file_name") && (!show || form.object.send("#{field}_file_name"))
+		%div
+			#{t('.file_name')}:&nbsp;
+			%span(class="file_name" style="color:gray;")= h form.object.send("#{field}_file_name")
+	- if form.object.respond_to?("#{field}_file_size") && (!show || form.object.send("#{field}_file_size"))
+		%div
+			#{t('.file_size')}:&nbsp;
+			%span(class="file_size" style="color:gray;")= form.object.send("#{field}_file_size") && (u = 10.times.find { |i| form.object.send("#{field}_file_size")/(1024**(i+1)) == 0 }) && "#{form.object.send("#{field}_file_size")/(1024**u)} #{([nil]+%w[K M G T P])[u]}B"
+	- if form.object.respond_to?("#{field}_content_type") && (!show || form.object.send("#{field}_content_type"))
+		%div
+			#{t('.content_type')}:&nbsp;
+			%span(class="content_type" style="color:gray;")= h form.object.send("#{field}_content_type")
+	- if form.object.respond_to?("#{field}_updated_at") && (!show || form.object.send("#{field}_updated_at"))
+		%div
+			#{t('.updated_at')}:&nbsp;
+			%span(class="updated_at" style="color:gray;")= form.object.send("#{field}_updated_at") && form.object.send("#{field}_updated_at").strftime("%Y-%m-%d %H:%M:%S")
+	- if form.object.respond_to?("#{field}_image_width") && (!show || form.object.send("#{field}_image_width"))
+		%div
+			#{t('.image_width')}:&nbsp;
+			%span(class="image_width" style="color:gray;")= form.object.send("#{field}_image_width")
+			&nbsp;px
+	- if form.object.respond_to?("#{field}_image_height") && (!show || form.object.send("#{field}_image_height"))
+		%div
+			#{t('.image_height')}:&nbsp;
+			%span(class="image_height" style="color:gray;")= form.object.send("#{field}_image_height")
+			&nbsp;px

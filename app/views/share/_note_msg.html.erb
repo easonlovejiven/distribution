@@ -1,0 +1,104 @@
+
+<!--弹框-->
+<div class="hzb_popwin"  id="hzb_popwin">
+    <div class="hzb_popWin_box">
+        <div class="con">
+            <%=image_tag("fx/right.png",:class=>'f_left')%>
+            <div class="con_font f_left">
+                <span class="gn">转出成功！</span>
+                <span>请耐心等待到帐</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--转出失败-->
+<div class="hzb_out" id="hzb_out">
+    <div class="hzb_out_flase">
+        <div class="out_flase_warn">
+            <%=image_tag("fx/wrong.png")%>
+            <span class="defeat">转出失败</span>
+        </div>
+        <div class="go_realname">
+            <span class="real_name">余额转出需完成实名认证</span>
+            <a href="/"><input type="button"  value="去认证"/></a>
+        </div>
+
+    </div>
+</div>
+
+<!--密码错误-->
+<div class="hzb_error" id="hzb_error">
+    <div class="hzb_error_password">
+        <div class="out_flase_warn">
+            <%=image_tag("fx/wrong.png")%>
+            <span class="defeat">提示信息</span>
+            <div class="go_realname">
+                <span class="real_name"> </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  var win_width = $(window).width();
+  var win_height = $(window).height();
+
+  function bg(bool) {
+      var div1 = $("<div id='hei'></div>");
+      div1.css("width", "100%");
+      div1.css("height", "100%");
+      div1.css("position", "fixed");
+      div1.css("top", 0);
+      div1.css("left", 0);
+      div1.css("background", "#000");
+      div1.css("opacity", 0.3);
+
+      if (bool) {
+          $("body").append(div1);
+      } else {
+          $("#hei").remove();
+      }
+  }
+//弹框 转出成功
+  function tk(bool) {
+      $("#hzb_popwin").css("top", 0);
+      $("#hzb_popwin").css("left", 0);
+      if (bool) {
+          $("#hzb_popwin").show();
+      } else {
+          $("#hzb_popwin").animate({opacity: 0}, 1000);
+          setTimeout(function () {
+              $("#hzb_popwin").hide();
+              $("#hzb_popwin").animate({opacity: 1}, 0);
+          }, 1000);
+      }
+  }
+
+
+//弹框 转出失败
+  function out(bool) {
+      $("#hzb_out").css("top", 0);
+      $("#hzb_out").css("left", 0);
+      if (bool) {
+          $("#hzb_out").remove();
+      }
+  }
+
+
+//弹框 密码错误
+  function er(bool, msg) {
+      $("#hzb_error").css("top", (win_height - $("#hzb_error").height()) / 2 + "px");
+      $("#hzb_error").css("left", (win_width - $("#hzb_error").width()) / 2 + "px");
+      $(".real_name").html(msg);
+      if (bool) {
+          $("#hzb_error").show();
+      } else {
+          $("#hzb_error").hide();
+      }
+  }
+
+ 
+
+</script>

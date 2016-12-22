@@ -1,0 +1,20 @@
+<div class="form-group">
+  <%= f.label field, class: 'col-md-3 control-label' do -%>
+      <%= raw('<sup>*</sup>') if defined?(required) && required %>
+      <%= @record.class.human_attribute_name(field) %>
+  <% end -%>
+
+  <div class="col-md-6">
+    <% field_class={class: 'form-control'} %>
+    <% field_class.merge!({required: true}) if defined?(required) && required %>
+    <% field_class.merge!(rows: 6, style: 'resize: none;') %>
+    <% if @show %>
+        <%= defined?(value) ? value : @record.send(field) %>
+    <% else %>
+        <%= f.text_area field, field_class %>
+    <% end %>
+    <% if defined?(note) %>
+        <span class="note"><%= note %></span>
+    <% end %>
+  </div>
+</div>

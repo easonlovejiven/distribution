@@ -1,0 +1,149 @@
+<header class="top_bar clearfix">
+    <div class="common" style="border:2px solid #C3C3C3">
+        <a href="http://mall.eventnation.com.cn/customer/account" class="top_img" >
+            <!--<a href="http://mall.eventnation.com.cn/android" class="top_img">-->  <%=image_tag("fx/back.png")%> </a>
+        <span class="top_size">财富分享</span>
+
+    </div>
+</header>
+<main>
+    <div class="center_lbt swiper-container">
+        <div class="lbt swiper-wrapper">
+            <%@posters.each do |item|%>
+              <div class="swiper-slide">
+                  <a href="<%=item[:url]%>"><%=image_tag(get_img_url(item[:pic]))%></a>
+              </div>
+            <%end%>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="center_user clearfix">
+        <div class="user_img f_left">
+            <%=avatar_tag(current_user.avatar_url,:class => 'img-circle')%> 
+        </div>
+        <div class="user_mas f_left">
+            <span class="user_mas_name"><%=current_user.nickname%> <em><%=current_user.province_name%></em></span>
+            <span>当前级别：<em> <%=@user.level.try(:name)%></em></span>
+        </div>
+    </div>
+    <div class="center_bb">
+        <span class="bb_name">邦邦余额</span>
+        <span class="bb_num">
+            <em> <%=link_to '<余额明细',fx_withdraws_path%> </em>
+            <%=format_price(current_user.bang_amount || 0)%>
+            <em> <%=link_to '余额转出>',new_fx_withdraw_path %> </em>
+        </span>
+    </div>
+    <div class="mingci">
+        <ul class="mingci_item">
+            <li>
+                <div class="item_img f_left">
+                    <%=image_tag("fx/red_mingci.png")%>
+                </div>
+                <div class="item_pm f_right">
+                    <span>全国排名</span>
+                    <em><%=@user.rank%>名</em>
+                    <span>与前1名相差</span>
+                    <em><%=format_price(@user.distance_amount)%></em>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <li>
+                <div class="item_img f_left">
+                    <%=image_tag("fx/blue_mingci.png")%>
+                </div>
+                <div class="item_sjpm f_right">
+                    <span>省级排名</span>
+                    <em><%=@user.province_rank%>名</em>
+                    <span>与前1名相差</span>
+                    <em><%=format_price(@user.distance_province_amount)%></em>
+                </div>	
+                <div class="clearfix"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="rebate">
+        <ul>
+            <li>
+                <a href="/fx/home/return_amount?type=my"> 
+                    <span class="rebate_total"></span>
+                    <%=image_tag("fx/my.png",:class=>"rebate_img")%> 
+                    <span class="rebate_consume">消费返利</span>
+                    <span class="rebate_mon" style="color: #FD6363;"><%=format_price(@user.info.try(:amount))%></span>
+                </a>
+            </li>
+            <li> 
+                <a href="/fx/home/return_amount?type=partner"> 
+                    <span class="rebate_total"><%=image_tag("fx/b_p.png")%>
+                        <em style="color: #A4D1FB;">
+                            <%=@user.info.try(:dealer1_count)%>
+                        </em></span>
+                    <%=image_tag("fx/my_2.png", :class=>"rebate_img")%>
+                    <span class="rebate_consume">消费返利</span>
+                    <span class="rebate_mon" style="color: #A4D1FB;"><%=format_price(@user.info.try(:amount1))%></span>
+                </a>
+            </li>
+            <li>
+                <a href="/fx/home/return_amount?type=shoper"> 
+                    <span class="rebate_total"><%=image_tag("fx/y_p.png")%><em style="color: #FFE100;"><%=@user.info.try(:dealer2_count)%></em></span>
+                    <%=image_tag("fx/my_3.png",:class=>"rebate_img")%>
+                    <span class="rebate_consume">消费返利</span>
+                    <span class="rebate_mon" style="color: #FFE100;"><%=format_price(@user.info.try(:amount2))%></span>
+                </a>
+            </li>
+            <li>
+               <!-- <a href="/fx/home/return_amount?type=all">-->
+                    <span class="rebate_total"><%=image_tag("fx/g_p.png")%><em style="color: #7FC469;"><%=@user.info.try(:dealer_count)%></em></span>
+                    <%=image_tag("fx/my_4.png" ,:class=>"rebate_img")%> 
+                    <span class="rebate_consume">返利总额</span>
+                    <span class="rebate_mon" style="color: #7FC469;"><%=format_price(@user.try(:total_amount))%></span>
+                </a>
+            </li>
+            <li>
+              <!--  <a href="/fx/home/return_amount?type=moth">-->
+                    <span class="rebate_total"></span>
+                    <%=image_tag("fx/my_5.png",:class=>"rebate_img")%>
+                    <span class="rebate_consume">本月返利</span>
+                    <span class="rebate_mon" style="color: #A4D1FB;"><%=format_price(@user.info.try(:current_month_amount))%></span>
+                 
+            </li>
+            <li>
+                <a href="/fx/home/tax_rates">
+                    <span class="rebate_total"></span>
+                    <%=image_tag("fx/my_6.png" ,:class=>"rebate_img")%>
+                    <span class="rebate_consume">个人所得税</span>
+                    <span class="rebate_mon" style="color: #F7B652;"><%=format_price(@user.tax_amount)%></span>
+                </a>
+            </li>
+            <li>
+                <a href="/qrcode/<%=@user.id%>">  
+                    <span class="rebate_total"></span>
+                    <%=image_tag("fx/my_7.png" ,:class=>"rebate_img")%>
+                    <span class="rebate_consume">开始推广</span>
+                    <span class="rebate_mon" style="color: #A4D1FB;"></span>
+                </a>
+            </li>
+            <li>
+                <a href="/fx/home/note">
+                    <span class="rebate_total"></span>
+                    <%=image_tag("fx/my_8.jpg" ,:class=>"rebate_img")%>
+                    <span class="rebate_consume pink">创业笔记</span>
+                    <span class="rebate_mon" style="color: #A4D1FB;"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</main>
+
+<script>
+  //轮播图
+  var swiper = new Swiper('.swiper-container', {
+      pagination: '.swiper-pagination',
+      paginationClickable: true,
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: 2500,
+      autoplayDisableOnInteraction: false
+  });
+</script>

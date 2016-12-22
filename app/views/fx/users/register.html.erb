@@ -1,0 +1,20 @@
+ 
+<div class="fx_img">
+    <%= image_tag "fx/fx.png"%>
+</div>
+
+<%= form_for(@user, as: :user,:html => {remote: true, class: 'form'}) do |form| %>
+    <%= text_field_tag "user[nickname]", nil ,:class => "number", :placeholder => "请输入昵称" %>
+    <%= form.password_field :password, :class => "number", :placeholder => "请设置6—20位登录密码" %>
+    <div class="yz-box">
+        <input type="text" name="mcaptcha" placeholder="短信验证码" class="yz"/>
+        <input type="hidden" id="user_account" name="user[account]" value="<%=session[:account]%>"/>
+        <input type="hidden" name="invitation" value="<%=session[:fx_invitation]%>" />
+        <input type="button" value="获取验证码" class="yzm in-yzm" onclick="send_msg(this);"/>
+    </div>
+    <div class="fx_tj">
+        <input type="submit"  value="立即注册" />
+    </div>
+<% end %>
+
+

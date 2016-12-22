@@ -1,0 +1,132 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<header class="top_bar clearfix">
+    <div class="common" style="border:2px solid #C3C3C3">
+        <a href="/" class="top_img"><%=image_tag("fx/back.png")%>  </a>
+        <span class="top_size">我的创业码</span>
+        <span class="top_point f_right share">
+            <a onclick="shareHref();">  <%=image_tag("fx/dd.png")%> </a>
+        </span>
+    </div>
+</header>
+<main class= "startcode">
+    <div class="main_img">
+        <%=image_tag("fx/bg_t.jpg")%> 
+
+    </div>
+    <div class="head_img">
+        <%=avatar_tag(@user.account.try(:avatar_url),:class => 'img-circle')%> 
+    </div>
+    <div class="head_name">
+        <span class="user_name"><%=@user.name%></span>
+    </div>
+    <p>会展邦普通创业合伙人</p>
+    <div class="startcode_code">
+        <p class="invite_code">我的邀请码：<span><%=@user.invitation%></span></p>
+        <%=image_tag(@user.invitation_qrcode)%>
+    </div>
+    <div class="foot_img">  <%=image_tag("fx/bg_b.jpg")%> </div>
+</main>
+
+<div id="shar_fun" class="shar_fun" style="z-index: 9999">
+    <div class="shar_funt">
+        <ul>
+            <li>  <%=image_tag("fx/wx.png")%>  <span>微信好友</span></li>
+            <li> <%=image_tag("fx/fw.png")%>   <span>微信朋友圈</span></li>
+        </ul>
+    </div>
+    <div class="shar_funb" id="shar_funb">
+        <span>取消</span>
+    </div>
+</div>
+
+<script type="text/javascript">
+  if (window.plus) {
+      plusReady();
+  } else {
+      document.addEventListener("plusready", plusReady, false);
+  }
+  function plusReady() {
+      plus.key.addEventListener('backbutton', function () {
+          history.back();
+      }, false);
+
+      plus.share.getServices(function (s) {
+          shares = {};
+          for (var i in s) {
+              var t = s[i];
+              shares[t.id] = t;
+          }
+          console.log("获取分享服务列表成功");
+      }, function (e) {
+          console.log("获取分享服务列表失败：" + e.message);
+      });
+  }
+
+
+  function shareAction(id, ex) {
+      var s = null;
+      if (!id || !(s = shares[id])) {
+          console.log("无效的分享服务！");
+          return;
+      }
+      if (s.authenticated) {
+
+          shareMessage(s, ex);
+      } else {
+
+          s.authorize(function () {
+              shareMessage(s, ex);
+          }, function (e) {
+              console.log("认证授权失败");
+          });
+      }
+  }
+
+  function shareMessage(s, ex) {
+     var code = '<%=@user.invitation%>';
+      var msg = {
+          content: '会展邦携手京东开启行业集中采购新模式',
+          href: 'http://fx.eventnation.com.cn/fx/signup?invitation='+code,
+          title: '京东大客户通道',
+          thumbs: ['http://7xi8qz.com1.z0.glb.clouddn.com/logo_120.png'],
+          pictures: ['http://7xi8qz.com1.z0.glb.clouddn.com/logo_120.png'],
+          extra: {
+              scene: ex
+          }
+      };
+      s.send(msg, function () {
+          console.log("分享成功!");
+      }, function (e) {
+          console.log("分享失败!");
+      });
+  }
+  /**
+   * 分享按钮点击事件
+   */
+  function shareHref() {
+      var ids = [{
+              id: "weixin",
+              ex: "WXSceneSession" /*微信好友*/
+          }, {
+              id: "weixin",
+              ex: "WXSceneTimeline" /*微信朋友圈*/
+          }],
+              bts = [{
+                      title: "发送给微信好友"
+                  }, {
+                      title: "分享到微信朋友圈"
+                  }];
+      plus.nativeUI.actionSheet({
+          cancel: "取消",
+          buttons: bts
+      },
+      function (e) {
+          var i = e.index;
+          if (i > 0) {
+              shareAction(ids[i - 1].id, ids[i - 1].ex);
+          }
+      }
+      );
+  }
+
+</script>

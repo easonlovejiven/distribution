@@ -1,0 +1,8 @@
+<% inputs = (params[:where]||{})[name].to_a %>
+<%= text_field_tag "where[#{name}][]", inputs.size == 1 ? inputs.first : nil %>
+<%= link_to inputs.size > 1 ? inputs.size : '...', '#', :class => 'search_array_select', 'data-name' => name, 'data-title' => title %>
+<span>
+  <% inputs.size > 1 && inputs.each do |input| %>
+    <%= hidden_field_tag "where[#{name}][]", input %>
+  <% end %>
+</span>

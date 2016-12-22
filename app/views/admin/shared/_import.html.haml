@@ -1,0 +1,20 @@
+#import(style="display:none;")
+  .modal-header
+    %button(type="button" class="close" data-dismiss="rightPanel") ×
+    %h4.modal-title 导入
+  .modal-body
+    = form_tag url, :multipart => true,class: "form-horizontal" do
+      .form-group
+        %label.col-md-3.control-label CSV
+        .col-md-8= columns
+      .form-group
+        %label.col-md-3.control-label 文本
+        .col-md-8= text_area_tag 'csvs[]', '', :oninput => "if (/\\t/.test($(this).val())) $(this).val($(this).val().replace(/\\t/g, ','))",class: "form-control"
+        .form-group
+      .form-group
+        %label.col-md-3.control-label 文件
+        .col-md-8
+          = file_field_tag 'csvs[]', :id => '',class: "form-control"
+          %a(href="#" onclick="$(this).before($(this).prev().outerHTML()); return false;") 添加更多
+      .form-actions
+        .submit= submit_tag '提交',class: "btn btn-primary"

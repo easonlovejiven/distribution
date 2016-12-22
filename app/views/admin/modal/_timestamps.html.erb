@@ -1,0 +1,16 @@
+<% html_class = {class: 'form-control'}.merge!(f.options[:options_class]) %>
+
+<% [:created_at, :updated_at].each do |field| %>
+    <div class="form-group">
+      <%= f.label field, {class: 'col-md-3 control-label'} %>
+      <% if @show %>
+          <div class="form-control-static">
+            <%= defined?(value) ? value : @record.send(field) %>
+          </div>
+      <% else %>
+          <div class="col-lg-8">
+            <%= f.text_field field, html_class.merge(value: f.object.send(field).strftime("%Y-%m-%d %H:%M:%S")) %>
+          </div>
+      <% end %>
+    </div>
+<% end %>

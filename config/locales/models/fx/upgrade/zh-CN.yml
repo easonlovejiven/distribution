@@ -1,0 +1,9 @@
+zh-CN:
+  activerecord:
+    models:
+      "fx/upgrade": "升级规则"
+    attributes:
+      "fx/upgrade":
+        month: 累计月份
+        count: 下级分销商数量
+        amount: 销售金额

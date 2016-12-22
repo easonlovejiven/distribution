@@ -1,0 +1,5 @@
+en:
+  activerecord:
+    models:
+      manage: Manage
+      "manage/log": Log

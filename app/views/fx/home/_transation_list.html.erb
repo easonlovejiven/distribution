@@ -1,0 +1,18 @@
+<%if @transations.present?%>
+  <%@transations.each do |obj|%>
+    <div class="kind clearfix">
+        <div class="kind_brand f_left">
+            <span class="brand_name"> 商城订单</span>
+            <span class="brand_time"> <%=obj.created_at.strftime("%Y-%m-%d %H:%M:%S")%></span>
+        </div>
+        <div class="kind_pay f_right">
+            <span class="pay_price"><%=format_price(obj.trade.try(:total_amount))%> </span>
+            <%if obj.sort == 1%>
+              <span class="pay_back"> <%=image_tag("fx/back_red.png")%> <%=format_price(obj.amount)%></span>
+            <%else%>
+              <span class="pay_fan"><%=image_tag("fx/fan.png")%>  <%=format_price(obj.amount)%></span>
+            <%end%>
+        </div>
+    </div>
+  <%end%>
+<%end%>

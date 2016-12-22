@@ -1,0 +1,80 @@
+ 
+<div class="fx_img">
+    <%= image_tag "fx/fx.png"%>
+</div>
+<%= form_for(@user, :url => validate_params_fx_users_path, :html => {remote: true, class: 'form'}) do |form| %>
+    <input type="text" name="user[account]" placeholder="注册手机号" class="number"/>
+
+    <div class="yz-box ">
+        <input type="text" name="captcha"  id="captcha" placeholder="输入验证码" class="yz"/>
+        <input class="captcha-code" type="text" id="yzm" readonly="readonly" name="yzm">
+        <a href="javascript:void(0);" id="refresh"> 刷 新 </a>
+        <i class="yes"></i>
+    </div>
+    <input type="hidden" name="invitation" value="<%=params[:invitation]%>" />
+    <div class="fx_tj">
+        <input type="submit"  value="立即注册" />
+    </div>
+  <% end %>
+
+  <script>
+    $(function () {
+        $(".number").focus(function () {
+            $(".form li>div:eq(1) ").removeClass("item-error").addClass("item-tips");
+        });
+        $(".number").blur(function () {
+            reg = /^1[3|4|5|8][0-9]\d{4,8}$/i;
+            if ($(".number").val() === "") {
+                return;
+            }
+            else if (!reg.test($(".number").val())) {
+                $(".form li>div:eq(1) ").removeClass("item-tips").addClass("item-error");
+                $(".item-error .error-text").html("手机号不正确");
+            }
+            else if (reg.test($(".number").val())) {
+                $(".number + .yes").css("display", "block");
+            }
+
+        });
+
+
+        $(".form .validate").click(function () {
+            var data = validate();
+            if (data === false) {
+                return false;
+            } else {
+                $(".form li>div:eq(3)").removeClass("item-error").addClass("item-tips");
+            }
+
+        });
+
+        var $btns = $("#refresh");
+        $btns.click(function (e) {
+            createCode();
+        });
+        createCode();
+        function validate() {
+
+            captcha = $("#captcha").val().toLowerCase();
+            yzm = $("#yzm").val().toLowerCase();
+
+            if ($(".number").val() === "") {
+                $(".form li>div:eq(1) ").removeClass("item-tips").addClass("item-error");
+                $(".item-error .error-text").html("请输入手机号");
+                return false;
+            }
+            reg = /^1[3|4|5|8][0-9]\d{4,8}$/i;
+            if (!reg.test($(".number").val())) {
+                return false;
+            }
+
+            if (captcha !== yzm) {
+                $(".form li>div:eq(3) ").removeClass("item-tips").addClass("item-error");
+                $(".item-error .error-text").html("验证码不正确");
+                return false;
+            }
+
+            return true;
+        }
+    });
+  </script>

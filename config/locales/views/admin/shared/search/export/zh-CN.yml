@@ -1,0 +1,7 @@
+zh-CN:
+  admin:
+    shared:
+      search:
+        export:
+          export: 导出
+          format: 格式

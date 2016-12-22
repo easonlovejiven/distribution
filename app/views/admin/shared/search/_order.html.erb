@@ -1,0 +1,8 @@
+<%
+   klass = self.class.const_get(controller.class.name.gsub(/^Admin|Controller$/, '').singularize)
+   options = (%w[id] + (fields ||= []) + %w[created_at updated_at]).map { |field|
+     [["#{klass.human_attribute_name(field)} ↑", "#{field} asc"],
+      ["#{klass.human_attribute_name(field)} ↓", "#{field} desc"]]
+   }.reduce(&:+)
+%>
+<%= render 'admin/shared/search/select', field: 'order', kv: {k: 'order', v: params['order']}, field_name: '排序', options: options %>

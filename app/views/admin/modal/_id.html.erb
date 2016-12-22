@@ -1,0 +1,11 @@
+<fieldset>
+  <div class="form-group">
+    <%= f.label :id, 'ID', {class: 'col-md-3 control-label'} %>
+
+    <div class="col-md-2">
+      <div class="form-control-static">
+        <%= defined?(value) ? value : @record.send(:id) %>
+      </div>
+    </div>
+  </div>
+</fieldset>

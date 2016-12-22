@@ -1,0 +1,31 @@
+<% @record = @upgrade %>
+<% @show = !%w[new edit].include?(params[:action]) && @record.valid? %>
+<div class="modal-header">
+  <%= render "admin/modal/header" %>
+</div>
+<%= render 'admin/shared/prompt' %>
+<div class="modal-body">
+  <%= form_for @upgrade, as: :upgrade, :url => @upgrade.new_record? ? admin_fx_upgrades_path : admin_fx_upgrade_path(@upgrade),
+               :html => {:method => @upgrade.new_record? ? :post : :put, :multipart => true, class: "form-horizontal"} do |f| %>
+      <div class="form-group">
+        <%= f.label :id, 'ID', {class: 'col-md-3 control-label'} %>
+        <div class="form-control-static">
+          <%= f.hidden_field :id %>
+          <strong><%= @upgrade.send(:id) %></strong>
+        </div>
+      </div>
+      <%= render 'admin/modal/text_field',{f: f,field: "month",required: true} %>
+      <%= render 'admin/modal/text_field',{f: f,field: "count",required: true} %>
+      <%= render 'admin/modal/text_field',{f: f,field: "amount",required: true} %>
+
+      <div class="form-actions">
+        <% if @show %>
+            <%= link_to '查看', admin_fx_upgrade_path(@upgrade), class: "btn btn-primary", "data-target" => "rightPanel" %>
+            <%= link_to '编辑', edit_admin_fx_upgrade_path(@upgrade), "data-target" => "rightPanel" if can?(:update,:upgrade) %>
+            <%= link_to '删除', admin_fx_upgrade_path(@upgrade), :confirm => "确定删除吗？", :method => :delete   if can?(:delete,:upgrade)  %>
+        <% else %>
+            <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+        <% end %>
+      </div>
+  <% end %>
+</div>

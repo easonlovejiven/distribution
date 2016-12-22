@@ -1,0 +1,26 @@
+<div id="uploadWrap">
+  <div class="statusBar"></div>
+  <div id="container" class="dropzone dz-clickable fileList">
+    <div id="browseButton" class="dz-uploadBtn">
+      <%= image_tag('admin/dropzone/image.png') %>
+    </div>
+  </div>
+</div>
+
+<%# content_for :js_part do %>
+<%= javascript_include_tag 'admin/core/upload.js' %>
+<script type="text/javascript">
+    $(function () {
+        var uploadConfig = {
+            qiniuDomain: "<%=Rails.application.secrets[:qiniu_fx_url]%>",
+            uptokenUrl: "/uploads/uptoken.json",   //获取上传的token
+            storeDir: "uploads/",
+            saveUrl: "/uploads.json",
+            browseButtonId: 'browseButton',
+            containerId: 'container',
+            drop_element: 'dropElement'
+        };
+        (new WeimallUpload(uploadConfig));
+    })
+</script>
+<%# end %>

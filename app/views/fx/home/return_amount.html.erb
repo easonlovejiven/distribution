@@ -1,0 +1,16 @@
+<header class="top_bar clearfix">
+    <div class="common">
+        <a href="/" class="top_img"><%=image_tag("fx/back.png")%> </a>
+        <span class="top_size"><%=@title%></span>
+        
+    </div>
+</header>
+<!--内容-->
+<main>
+    <div class="consume_<%=params[:type]%>">
+        <span class="consume_size"><%=@title%></span>
+        <span class="consume_pay"> <%=format_price(@amount)%></span>
+    </div>
+   <%=render 'transation_list'%>
+
+</main>

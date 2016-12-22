@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="jarviswidget">
+      <header>
+        <span class="widget-icon"><i class="fa fa-table"></i></span>
+
+        <h2>等级列表</h2>
+
+        <div class="widget-toolbar">
+        </div>
+        <ul class="nav nav-tabs pull-right in" id="myTab">
+          <li class="active">
+            <a href="/admin/fx/users">
+              <span class="hidden-mobile hidden-tablet">全部分销商</span></a>
+          </li>
+
+          <li>
+            <a href="/admin/fx/users/apply" class="txt-color-white">
+              <span class="hidden-mobile hidden-tablet">申请分销商</span></a>
+          </li>
+        </ul>
+      </header>
+      <div>
+        <div class="widget-body-toolbar">
+          <%= form_tag request.path, method: 'get', id: 'search_form', class: 'form-inline' do %>
+              <%= render 'admin/shared/search/basic', field: 'id', kv: search_field_kv([:id]), size: 4 %>
+              <%= render 'admin/shared/search/basic', field: 'name', kv: search_field_kv([:name, :like]) %>
+              <%= render 'admin/shared/search/range', field: 'created_at', class_names: 'hasDatepicker' %>
+              <%= render 'admin/shared/search/select', field: 'state', kv: search_field_kv(:state), options: Fx::User::STATE_NAME.invert %>
+              <%= render 'admin/shared/search/select', field: 'upgrade_state', kv: search_field_kv(:upgrade_state), options: Fx::User::UPGRADE_STATE.invert %>
+              <%= render 'admin/shared/search/order', field: 'order' %>
+              <%= render 'admin/shared/search/select', field: 'per_page', kv: {k: 'per_page', v: params[:per_page]}, options: %w[10 20 30 50 100 200 300 500].map { |i| [i, i] }, field_name: '每页' %>
+              <%= submit_tag t(:search), class: 'btn search-xs btn-success' %>
+              <%= link_to t(:reset), request.path, class: 'btn search-xs btn-default' %>
+          <% end %>
+        </div>
+        <div class="widget-body no-padding">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+              <tr>
+                <th scope="col" class="check-column"><!-- <input type="checkbox" /> --></th>
+                <th>
+                  ID <%= order_link_btn('id') %>
+                </th>
+                <th>名称</th>
+                <th>手机</th>
+                <th>等级</th>
+                <th>升级状态</th>
+                <th>上级分销</th>
+                <th>总收入</th>
+                <th>本月收入</th>
+                <th>余额</th>
+                <th>邀请码</th>
+                <th>状态</th>
+                <th>
+                  创建时间 <%= order_link_btn('created_at') %>
+                </th>
+                <th class="table_set">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @users.each do |user| %>
+                  <tr>
+                    <th scope="row" class="check-column"><!-- <input type="checkbox" name="delete[]" value="1" /> --></th>
+                    <td><%= link_to user.id, 'where[id]' => user.id %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.account.try(:account) %></td>
+                    <td><%= user.level.try(:name) %></td>
+                    <td><%= user.upgrade_state_html %></td>
+                    <td><%= user.prev_dealer.present? ? user.prev_dealer.name : "无" %></td>
+                    <td><%= user.total_amount %></td>
+                    <td><%= user.info.current_month_amount %></td>
+                    <td><%= user.account.try(:hfbpay).try(:bang_amount) %></td>
+                    <td><%= user.invitation %> <%= link_to_if(!user.qrcode_pic.nil?, "二维码", user.qrcode_image.url, "data-target" => "rightPanel") %></td>
+                    <td><%= user.state_name %></td>
+                    <td><%= user.created_at && user.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+                    <td class="op">
+                      <%= link_to '编辑', edit_admin_fx_user_path(user), "data-target" => "rightPanel", class: 'btn btn-xs btn-default' if can?(:update, user) %>
+                      <%= link_to '分销关系', children_admin_fx_user_path(user), class: 'btn btn-xs btn-default' if can?(:update, user) %>
+                      <%= link_to '解除分销', delete_relation_admin_fx_user_path(user, page: params[:page]), "data-target" => "rightPanel", class: 'btn btn-xs btn-success' if can?(:destroy, user) %>
+                      <%= link_to '修改关系', edit_relation_admin_fx_user_path(user, page: params[:page]), "data-target" => "rightPanel", class: 'btn btn-xs btn-success' if can?(:destroy, user) %>
+                      <%= link_to '删除', delete_admin_fx_user_path(user), "data-target" => "rightPanel", class: 'btn btn-xs btn-success' if can?(:destroy, user) %>
+                      <%#= link_to '添加分销关系', new_relation_admin_fx_user_path(user), "data-target" => "rightPanel", class: 'btn btn-xs btn-success' if can?(:destroy, user) %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="dt-toolbar-footer">
+            <%= render "admin/shared/pagination", object: @users %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        App.handleDatePickers(false, false);
+    })
+</script>

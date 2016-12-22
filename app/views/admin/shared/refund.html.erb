@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="rightPanel">×</button>
+  <h4 class="modal-title">提示</h4>
+</div>
+<div class="modal-body">
+  <div class="form-horizontal">
+    <% if record.respond_to?(:deletable?) && !record.deletable? %>
+        <h3><%= unable_msg %></h3>
+
+        <div class="form-actions">
+          <%= link_to '取消', '#', 'data-dismiss' => "rightPanel", class: 'btn btn-default' %>
+        </div>
+    <% else %>
+        <h3><%= msg ||='请确认是否退款？' %></h3>
+
+        <div class="form-actions">
+          <%= link_to '退款', refundment_admin_fx_trade_path(record), :method => :post , class: 'btn btn-success' %>
+          <%= link_to '取消', '#', 'data-dismiss' => "rightPanel", class: 'btn btn-default' %>
+        </div>
+    <% end %>
+  </div>
+</div>

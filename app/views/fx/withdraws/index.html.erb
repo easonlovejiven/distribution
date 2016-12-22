@@ -1,0 +1,31 @@
+<header class="top_bar clearfix" style="background: #FFFFFF;">
+    <div class="common" style="border:2px solid #C3C3C3 ">
+        <a href="/" class="top_img"><%=image_tag("fx/back.png")%>  </a>
+        <span class="top_code" style="width:14rem">转出明细</span>
+    </div>
+</header>
+<main class="minute">
+    <%@bang_withdraws.each do |obj|%>
+      <div class="minute_item">
+          <div class="item_top clearfix">
+              <div class="top_left f_left">
+                  <span class="minute_remain">·余额转出</span>
+                  <span class="minute_time"> <%=obj.created_at.strftime("%Y-%m-%d %H:%M:%S")%></span>
+              </div>
+              <div class="top_right f_right">
+                  
+                    <span class="minute_succes"><%=obj.state_name%></span>
+                 
+              </div>
+          </div>
+          <div class="item_bottom">
+              <ul>
+                  <li><span>开户行：</span><span> <%=obj.bank_name%></span></li>
+                  <li><span>开户名：</span><span><%=obj.user_name%></span></li>
+                  <li><span>卡&nbsp;&nbsp;&nbsp;号：</span><span><%=obj.bank_account%></span></li>
+                  <li><span>转出额：</span><span> <%=format_price(obj.price)%></span></li>
+              </ul>
+          </div>
+      </div>
+    <%end%>
+</main>

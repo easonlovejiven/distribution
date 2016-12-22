@@ -1,0 +1,71 @@
+<% @record = @trade %>
+<% @show = !%w[new edit].include?(params[:action]) && @record.valid? %>
+<div class="modal-header">
+  <%= render "admin/modal/header" %>
+</div>
+<%= render 'admin/shared/prompt' %>
+<div class="modal-body">
+  <%= form_for @trade, as: :trade, :url => @trade.new_record? ? admin_fx_trades_path : admin_fx_trade_path(@trade),
+               :html => {:method => @trade.new_record? ? :post : :put, :multipart => true, class: "form-horizontal"} do |f| %>
+
+      <div class="form-group">
+        <%= f.label :id, 'ID', {class: 'col-md-3 control-label'} %>
+        <div class="form-control-static">
+          <%= f.hidden_field :id %>
+          <strong><%= @trade.send(:id) %></strong>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <%= f.label :name, '<sup>*</sup>名称'.html_safe, class: 'col-md-3 control-label' %>
+        <div class="col-md-4">
+          <%if @show%>
+              <div class="form-control-static">
+                <strong><%= @trade.name %></strong>
+              </div>
+          <%else%>
+              <%= f.text_field :name, {class: 'form-control', required: true} %>
+        <%end%>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :name, '<sup>*</sup>分成用户'.html_safe, class: 'col-md-3 control-label' %>
+        <div class="col-md-4">
+          <%@trade.transations.order("dealer_level asc").each do |transation|%>
+              <div class="form-control-static">
+                <strong><%=transation.dealer_level%>级分销商: <%= transation.dealer.name %></strong> 获利: <%= transation.amount %>元
+              </div>
+          <%end%>
+        </div>
+      </div>
+
+      <% if !@trade.new_record? %>
+          <div class="form-group">
+            <%= f.label :created_at, '创建时间', class: 'col-md-3 control-label' %>
+            <div class="form-control-static">
+              <strong><%= @trade.created_at && @trade.created_at.strftime("%Y-%m-%d %H:%M:%S") %></strong>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :updated_at, '修改时间', class: 'col-md-3 control-label' %>
+            <div class="form-control-static">
+              <strong><%= @trade.updated_at && @trade.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></strong>
+            </div>
+          </div>
+
+      <% end %>
+
+      <div class="form-actions">
+        <% if @show %>
+            <%= link_to '查看', admin_fx_trade_path(@trade), class: "btn btn-primary", "data-target" => "rightPanel" %>
+            <%= link_to '编辑', edit_admin_fx_trade_path(@trade), "data-target" => "rightPanel" if can?(:update,:trade) %>
+            <%= link_to '删除', admin_fx_trade_path(@trade), :confirm => "确定删除吗？", :method => :delete   if can?(:delete,:trade)  %>
+        <% else %>
+            <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+        <% end %>
+      </div>
+  <% end %>
+</div>

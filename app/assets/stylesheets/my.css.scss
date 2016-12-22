@@ -1,0 +1,151 @@
+ 
+/*主页面*/
+.consume{
+	height:4.375rem;
+	background: #81c16d;
+	color: #fff;
+}
+.consume_all{
+	height:4.375rem;
+	background: #81c16d;
+	color: #fff;
+}
+.consume_my{
+	height:4.375rem;
+	background: #ff5e5f;
+	color: #fff;
+}
+.consume_partner{
+	height:4.375rem;
+	background: #59C8FF;
+	color: #fff;
+}
+ 
+.consume_shoper{
+	height:4.375rem;
+	background: #FED03C;;
+	color: #fff;
+}
+.consume_moth{
+	height:4.375rem;
+	background: #81c16d;
+	color: #fff;
+}
+ 
+ 
+
+.consume_size{
+	font-size: 0.7rem;
+	padding:0.75rem 0 0.375rem 0.9rem;
+          display: inherit;
+}
+.consume_pay {
+	font-size:1.125rem;
+	padding: 0.375rem 0 0 0.9rem;
+        display: inherit;
+	
+}
+.consume_pay em {
+	font-style:normal;
+	font-size: 0.45rem;
+         
+}
+.kind {
+	height: 3.15rem;
+	border: 1px solid #E5E5E5;
+}
+.kind_brand{
+	height:3.125rem;
+	padding-left:0.9rem;
+}
+.brand_name{
+	font-size: 0.7rem;
+	padding:0.7rem 0 0.2rem 0;
+        display: inherit;
+}
+.brand_time {
+	font-size: 0.5rem;
+	color: #A9A9A9;
+	padding-top:0.2rem;
+}
+.kind_pay {
+	height:3.125rem;
+	padding-right:0.75rem;
+}
+.pay_price {
+	font-size: 0.55rem;
+	color:#3A3A3A;
+	padding:0.7rem 0 0.2rem 0;
+	text-align:right;
+        display: inherit;
+}
+.pay_back , .pay_fan{
+	font-size: 0.45rem;
+	color: #E65450;
+	padding-top:0.2rem;
+	text-align:right;
+}
+.pay_back img ,.pay_fan img{
+	width: 0.95rem;
+	height: 0.65rem;
+	padding-right:0.3rem;
+	vertical-align: middle;
+}
+.pay_fan img{width: 1.2rem;}
+/*个人所得税*/
+.tax {
+	height: 3.65em;
+	border: 1px solid #E5E5E5;
+}
+.tax_brand {
+	height:3.625rem;
+	padding-left:0.9rem;
+	color: #333333;
+}
+.brand_timer {
+	padding:0.9rem 0 0.35rem 0;
+	font-size: 0.6rem;
+         display: inherit;
+}
+.brand_money {
+	font-size: 0.6rem;
+	color: #999999;
+        display: inherit;
+}
+.tax_pay {
+	height:3.625rem;
+	padding-right:0.75rem;
+}
+.pay_none{
+	font-size: 0.7rem;
+	color: #FFA01E;
+	text-align: right;
+	padding:0.9rem 0 0.35rem 0;
+         display: inherit;
+}
+.pay_money{
+	font-size: 0.6rem;
+}
+
+/*分享页面*/
+.fx_img {width: 100%;height: 100%;}
+.fx_img img{width: 100%;height: 12.35rem;}
+.fx_zc{width: 100%;height: 100%;}
+.fx_zc input  , .fx_yz input {width: 80%;border: 3px solid #242424;border-radius: 5px;height: 2rem;padding: 0.3rem;display: block;margin: 1.75rem auto 0;font-size: 0.7rem;outline: none;}
+.fx_yz {overflow: hidden;width: 80%;margin: 0 auto;}
+.fx_yz .yanzhengma, .fx_yz .yanzm {width: 50%;margin-right: 5px;margin: .75rem auto}
+#yzmm{width: 5.8rem; background: #b2bfc7;text-align: center;font-weight: bold;color: #0080FF;}
+.fx_yz .yanzm{ border: 1px solid #b3b8cc;border-radius: 4px;font-size:0.9rem;margin-left: 0.5rem;}
+.fx_yz a {font-size: 0.55rem;color: #0F04F4;text-decoration: underline;float: right;}
+.fx_tj{width: 80%;height: 2rem;margin: 0 auto; padding-top: 1.25rem;}
+.fx_tj input {width:100%;height:2rem;border-radius:.2rem;-webkit-border-radius:.2rem;-moz-border-radius:.2rem;font-size:0.8rem;font-weight:normal;outline: none;background-color: #F94B47;color: #FFFFFF;}
+
+#yzm {
+  width: 5.8rem;
+  background: #b2bfc7;
+  //font-size: 16px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #0080FF;
+}

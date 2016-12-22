@@ -1,0 +1,7 @@
+span
+	- if include_blank ||= nil
+		=' form.radio_button field, nil
+		=' form.label field, raw('&#x3000;')
+	- form.object.class.send(field.pluralize).each do |key, value|
+		=' form.radio_button field, key
+		=' form.label "#{field}_#{key}", t("activerecord.enums.#{form.object.class.name.downcase.gsub('::', '/')}.#{field}.#{key}")

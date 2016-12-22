@@ -1,0 +1,8 @@
+@charset "utf-8";
+@import "admin/core/bootstrap.min";
+@import "admin/core/font-awesome";
+@import "admin/smartadmin/smartadmin";
+@import "admin/smartadmin/smartadmin-plugins";
+@import 'admin/core/base';
+@import 'plugins/*';
+@import 'pages/*';

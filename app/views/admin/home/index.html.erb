@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+    <!--<h1 class="page-title txt-color-blueDark">-->
+      <!--<i class="fa-fw fa fa-home"></i>-->
+      <!--<%#= @current_user.try(:name) %>-->
+    <!--</h1>-->
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-6">
+    <div class="jarviswidget">
+      <header>
+        <h2> 业务概览 </h2>
+      </header>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">订单</h3>
+        </div>
+        <div class="panel-body">
+          <label class='lk'>
+            <%= link_to "今日订单<b>(11)</b>".html_safe%></label>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">会员</h3>
+        </div>
+        <div class="panel-body">
+          <label class='lk'>
+            <%= link_to "今日新增<b>(10)</b>".html_safe,nil %></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-6">
+    <div class="jarviswidget">
+      <header>
+        <h2> 待处理事项 </h2>
+      </header>
+      <div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">订单</h3>
+          </div>
+          <div class="panel-body">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

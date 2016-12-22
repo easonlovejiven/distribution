@@ -1,0 +1,29 @@
+<header class="top_bar clearfix">
+    <div class="common" style="border:2px solid #C3C3C3">
+        <a href="/" class="top_img"><%=image_tag("fx/back.png")%> </a>
+        <span class="top_size">创业笔记</span>
+    </div>
+</header>
+<main>
+   
+    <%@relations.each do |relation|%>
+    <div class="selfnote">
+        <ul>
+            <li>
+                <span class="notet"><%=relation.dealer.try(:name)%></span>
+                <span class="noteb"> <%=relation.dealer.try(:level).try(:name)%></span>
+            </li>
+            <li>
+                <span class="notet">返利总额</span>
+                <span class="noteb note_red"><%=format_price(relation.dealer.try(:total_amount))%></span>
+            </li>
+            <li>
+                <span class="notet">伙伴人数</span>
+                <span class="noteb"><%=relation.dealer.info.try(:dealer1_count)%>人</span>
+            </li>
+        </ul>
+    </div>
+    <%end%>
+     
+     
+</main>

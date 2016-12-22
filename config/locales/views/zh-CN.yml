@@ -1,0 +1,30 @@
+zh-CN:
+  helpers:
+    select:
+      prompt: 请选择
+    submit:
+      create: 新增%{model}
+      submit: 储存%{model}
+      update: 更新%{model}
+  index: 列表
+  list: 列表
+  show: 查看
+  new: 新增
+  create: 创建
+  edit: 编辑
+  update: 更新
+  delete: 删除
+  destroy: 删除
+  copy: 复制
+  public: 发布
+  preview: 预览
+  visit: 访问
+  submit: 提交
+  search: 搜索
+  reset: 重置
+  actions: 操作
+  successful: 成功
+  failed: 失败
+  completed: 完成
+  published: 发布
+  confirm: 确定

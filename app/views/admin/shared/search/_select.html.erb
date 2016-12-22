@@ -1,0 +1,9 @@
+<% ## options: [['✔', 'true'], ['✘', 'false']]
+   field_name ||= self.class.const_get(controller.class.name.gsub(/^Admin|Controller$/, '').singularize).human_attribute_name(field)
+   options_arr = (options.is_a?(ActiveRecord::Relation) ? (['', nil] + options.map { |record| [record.respond_to?(:name) ? record.name : record.id, record.id] }) : options.to_a)
+%>
+<div class="input-group">
+  <%= label_tag kv[:k], field_name %>
+  <span class="select"><%= select_tag kv[:k], options_for_select(options_arr, kv[:v]), include_blank: true, class: "input-xs" %>
+  </span>
+</div>&nbsp;&nbsp;

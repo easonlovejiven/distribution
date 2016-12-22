@@ -1,0 +1,49 @@
+.fsUploadProgress {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  &.max_preview{
+    .progressContainer{
+      .pic{
+        width: 100px;
+        height: 100px;
+        img{
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
+  }
+  .progressContainer {
+    float: left;
+    margin-right: 5px;
+
+    .pic{
+      width: 35px;
+      height: 35px;
+      position: relative;
+    }
+    img {
+      width: 35px;
+      height: 35px;
+    }
+    .status {
+      position: absolute;
+      text-align: right;
+      top: 10px;
+    }
+    .loading {
+      font-size: 30px;
+    }
+    .remove_btn {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 0 2px;
+      line-height: 1;
+      z-index: 10;
+    }
+  }
+}

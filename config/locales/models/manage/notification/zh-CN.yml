@@ -1,0 +1,10 @@
+zh-CN:
+  activerecord:
+    models:
+      "manage/notification": '通知'
+    attributes:
+      "manage/notification":
+        user_id: 发送者
+        receiver_id: 接受者
+        content: 内容
+        unread: 是否读取

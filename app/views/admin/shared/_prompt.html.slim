@@ -1,0 +1,7 @@
+- if %w[create update destroy update_password].include?(action_name)
+  .alert.alert-warning.alert-dismissible role="alert"
+    button type="button" class="close" data-dismiss="alert"
+      span aria-hidden="true" &times;
+      spansr-only 关闭
+    strong 提示:
+    = "#{t(params[:action])}#{ @record.valid? ? t(:successful) : t(:failed)}"

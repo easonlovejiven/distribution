@@ -1,0 +1,5 @@
+= link_to t('show'), [ :admin, record ], class: 'btn btn-xs btn-default' if can?(:show, record)
+= link_to t('copy'), new_manage_account_path(id: record.id), class: 'btn btn-xs btn-default' if can?(:create, record)
+= link_to t('edit'), [:edit, :admin, record], class: 'btn btn-xs btn-default' if can?(:update, record)
+= link_to t(:update_password), [:password, :admin, record], class: 'btn btn-xs btn-default' if can?(:update, record)
+= link_to t(:destroy), [ :admin, record ], method: 'delete', data: { confirm: t('confirm') }, class: 'btn btn-xs btn-default' if can?(:destroy, record)

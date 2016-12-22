@@ -1,0 +1,57 @@
+<% content_for :content do %>
+    <%= form_for @setting, as: :setting, :url => admin_fx_setting_path(@setting),
+                 :html         => {:method => :put, :multipart => true, class: "form-horizontal"} do |f| %>
+        <fieldset>
+          <legend>分销人数限制</legend>
+          <div class="form-group">
+            <%= f.label :name, '<sup>*</sup>限制分销人数'.html_safe, class: 'col-md-3 control-label' %>
+            <div class="col-md-4">
+              <%= text_field_tag "setting[apply][limit]", @setting.value[:limit], {class: 'form-control', required: true} %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :name, '<sup>*</sup>剩余分销人数'.html_safe, class: 'col-md-3 control-label' %>
+            <div class="col-md-4">
+              <%= text_field_tag "setting[apply][remain]", @setting.value[:remain], {class: 'form-control', required: true} %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+          </div>
+        </fieldset>
+    <% end %>
+
+
+    <%= form_for @audit_setting, as: :setting, :url => admin_fx_setting_path(@setting),
+                 :html               => {:method => :put, :multipart => true, class: "form-horizontal"} do |f| %>
+        <fieldset>
+          <legend>分销商审核</legend>
+          <div class="form-group">
+            <%= f.label :name, '审核方式'.html_safe, class: 'col-md-3 control-label' %>
+            <div class="col-md-4">
+              <label class="radio">
+                <input type="radio" name="setting[audit_type]" value="0" <%= 'checked' if @audit_setting.value=="0" %>>
+                <i></i>不需要审核</label>
+              <label class="radio">
+                <input type="radio" name="setting[audit_type]" value="1" <%= 'checked' if @audit_setting.value=="1" %>>
+                <i></i>需要人工审核</label>
+              <label class="radio">
+                <input type="radio" name="setting[audit_type]" value="2" <%= 'checked' if @audit_setting.value=="2" %>>
+                <i></i>自动审核</label>
+              <div class="input-group">
+                <span class="input-group-addon">累计消费达到</span>
+                <%= text_field_tag "setting[audit_cost_amount]", @audit_cost_setting.value, {class: 'form-control'} %>
+                <span class="input-group-addon">元</span>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+        <div class="form-actions">
+          <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+        </div>
+    <% end %>
+<% end %>
+<%= render :template => "admin/fx/settings/layout" %>

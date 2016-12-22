@@ -1,0 +1,71 @@
+<div class="modal" id="select-modal" tabindex="9999" style="display: none">
+  <div class="modal-header"><h2>请选择</h2></div>
+  <div class="modal-body"></div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">确定</button>
+  </div>
+</div>
+
+<script id="select-list-template" type="text/x-handlebars-template">
+  <div class="select-list">
+    {{#each data}}
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="{{id}}"> {{name}}
+      {{#if default}}
+      （默认）
+      {{/if}}
+    </label>
+    {{/each}}
+  </div>
+</script>
+
+<script type="text/javascript">
+    SelectListModal = {
+        dialog: null,
+        checkedId: null,
+        open: function (url, checkedId) {
+            var $this = this;
+            var dialog = '';
+            alert("kkk")
+            $this.dialog = $("#select-modal");
+            $this.dialog.on("show.bs.modal", function () {
+                alert("kkk")
+                $.ajax({
+                    method: "get",
+                    url: url,
+                    success: function (data) {
+                        $this.init(data);
+                        $this.markChecked($this.checkedId);
+                    }
+                })
+                $("button:submit", $this.dialog).on("click", function () {
+                    var selectedId = $("input[type=radio]:checked", $this.dialog).val();
+                    if (selectedId == undefined) {
+                        App.showFlashMessage("请选择", "error")
+                        return false;
+                    }
+                    this.callback.call();
+
+                })
+            }).modal("show")
+        },
+        init: function (data) {
+            var $this = this;
+            $this.renderHtml(data);
+        }, renderHtml: function (data) {
+            var $this = this;
+            var source = $("#select-list-template").html();
+            var template = Handlebars.compile(source);
+            var html = template(data);
+            $this.dialog.find(".modal-body").html(html);
+        }, markChecked: function (checkedId) {
+            var $this = this;
+            $(".select-list input[value=" + checkedId + "]", $this.dialog).attr("checked", true);
+        }
+    }
+    $(function () {
+        $(document).on("click", "a[data-target='selectPanel']", function (a) {
+//            SelectListModal.open($(this).attr("data-url"), $(this).attr("data-checked-id"))
+        })
+    })
+</script>

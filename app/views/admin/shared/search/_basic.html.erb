@@ -1,0 +1,8 @@
+<%
+   size ||= 10
+   field_name ||= self.class.const_get(controller.class.name.gsub(/^Admin|Controller$/, '').singularize).human_attribute_name(field)
+%>
+<div class="input-group">
+  <%= label_tag kv[:k], field_name %>
+  <%= text_field_tag kv[:k], kv[:v], class: "input-xs #{class_names||=''}", size: size %>
+</div>&nbsp;&nbsp;

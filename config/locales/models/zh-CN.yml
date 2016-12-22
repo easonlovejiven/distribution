@@ -1,0 +1,9 @@
+zh-CN:
+  attributes:
+    id: ID
+    creator_id: 创建人
+    updater_id: 更新人
+    created_at: 创建时间
+    updated_at: 更新时间
+    actions: 操作
+

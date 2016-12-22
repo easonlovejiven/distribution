@@ -1,0 +1,6 @@
+- if (record ||= nil)
+	- name = name.call(record) if name.respond_to?(:call)
+	- name ||= record.send(%w[name_for_link name id].find { |field| record.respond_to?(field) && record.send(field).present? })
+	= link_to_if can?(:show, record), name, [:admin, record], rel: 'facebox'
+- if (records ||= nil)
+	= link_to_if can?(:show, records.scoped), records.count, controller: 'manage/' + records.klass.name.gsub('::', '/').downcase.pluralize, where: { records.proxy_association.reflection.foreign_key => records.proxy_association.owner.id }

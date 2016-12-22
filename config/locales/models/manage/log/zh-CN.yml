@@ -1,0 +1,10 @@
+zh-CN:
+  activerecord:
+    models:
+      "manage/log": 日志
+    attributes:
+      "manage/log":
+        user_id: 用户
+        controller: 模块
+        action: 操作
+        params_id: 参数ID

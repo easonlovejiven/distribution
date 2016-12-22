@@ -1,0 +1,72 @@
+I"Å(function() {
+  $(function() {});
+
+  $('#new_session_form, #ldap_form').on('submit', function() {
+    $.ajax({
+      url: $(this).attr('action') + '.json',
+      type: 'post',
+      data: $(this).serialize(),
+      dataType: 'json',
+      success: function(data) {
+        if (data['error']) {
+          $('#login_error').show();
+          return;
+        }
+        $('#login_error').hide();
+        $.cookie('remember_me', '1', {
+          expires: $('#rememberme').prop('checked') ? 90 : null,
+          path: '/'
+        });
+        return window.location.href = $('#redirect').val();
+      },
+      error: function() {}
+    }, $('#login_error').show());
+    return false;
+  });
+
+  $('#new_account_form').on('submit', function() {
+    $.ajax({
+      url: $(this).attr('action') + '.json',
+      type: 'post',
+      data: $(this).serialize(),
+      dataType: 'json',
+      success: function(data) {
+        if (data['error']) {
+          $('#login_error').show();
+          return;
+        }
+        return location.href = $('#redirect').val();
+      },
+      error: function() {
+        return $('#login_error').show();
+      }
+    });
+    return false;
+  });
+
+  $('#session_link').on('click', function() {
+    $('#account_area, #login_error').hide();
+    $('#session_area').show();
+    return false;
+  });
+
+  $('#account_link').on('click', function() {
+    $('#session_area, #login_error').hide();
+    $('#account_area').show();
+    return false;
+  });
+
+  $('#ldap_login').on('click', function() {
+    $('#ldap_area').show();
+    $('#session_area').hide();
+    return false;
+  });
+
+  $('#original_login').on('click', function() {
+    $('#session_area').show();
+    $('#ldap_area').hide();
+    return false;
+  });
+
+}).call(this);
+:ET

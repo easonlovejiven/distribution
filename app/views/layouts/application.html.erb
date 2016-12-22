@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>分销系统</title>
+        <meta http-equiv="Content-Type" content=”text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes">
+        <link rel="shortcut  icon" type="image/x-icon" href="<%=asset_path("favicon.ico")%>" media="screen"  />        
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+        <%= csrf_meta_tags %>
+        <script type="text/javascript">
+          if (window.plus) {
+              plusReady();
+          } else {
+              document.addEventListener("plusready", plusReady, false);
+          }
+
+
+          function plusReady() {
+              plus.key.addEventListener('backbutton', function () {
+
+                  history.back();
+              }, false);
+          }
+        </script>
+    </head>
+    <body>
+        <%= yield %>
+        <script type="text/javascript">
+          // 设置初始比例（1：1像素还原）
+          var iScale = 1 / window.devicePixelRatio;
+          document.write('<meta name="viewport" content="width=device-width,initial-scale=' + iScale + ',minimum-scale=' + iScale + ',maximum-scale=' + iScale + ',user-scalable=no"/>');
+
+          // 动态设置html字体大小
+          var iWidth = document.documentElement.clientWidth;
+          document.getElementsByTagName('html')[0].style.fontSize = iWidth / 16 + 'px';
+
+
+        </script>
+        <%=render '/share/note_msg'%>
+    </body>
+</html>

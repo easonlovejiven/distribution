@@ -1,0 +1,43 @@
+<% @record=@user %>
+<% @show =false %>
+<div class="modal-header">
+  <%= render "admin/modal/header" %>
+</div>
+<%= render 'admin/shared/prompt' %>
+
+<% if @user.prev_dealer.blank? %>
+    <%= form_for @user, as: :user, :url => add_relation_admin_fx_user_path(@user), :html => {:method => :post, :multipart => true, class: "form-horizontal"} do |f| %>
+        <%#= f.error_messages %>
+        <div class="modal-body">
+          <fieldset>
+            <%= render 'admin/modal/id', {f: f} if @show %>
+
+            <div class="form-group">
+              <%= f.label :name, '当前用户', class: 'col-md-3 control-label' %>
+              <div class="col-md-4">
+                <div class="form-control-static">
+                  <%= @user.name %> <%= @user.level.name %>
+                </div>
+                <div>下级分销商: <%= @user.level1_dealers.count %>个</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :name, '<sup>*</sup>添加给'.html_safe, class: 'col-md-3 control-label' %>
+              <div class="col-md-4">
+                <%= f.text_field :new_user_id, class: 'form-control', required: true %>
+                <span class="note">输入用户id</span>
+              </div>
+            </div>
+            <%= render 'admin/modal/footer', {f: f} %>
+
+          </fieldset>
+        </div>
+        </div>
+    <% end %>
+
+<% else %>
+    <p>
+    <h3> 该用户已经有上级分销商,不允许被添加到其他分销商下!</h3>
+    </p>
+<% end %>

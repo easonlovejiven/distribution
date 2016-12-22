@@ -1,0 +1,4 @@
+<%= ::Temple::Utils.escape_html((link_to t('show'), record, class: 'btn btn-xs btn-default', rel: 'facebox' if can?(:show, record))) %>
+<%= ::Temple::Utils.escape_html((link_to t('copy'), new_manage_account_path(id: record.id), rel: 'facebox', class: 'btn btn-xs btn-default' if can?(:create, record))) %>
+<%= ::Temple::Utils.escape_html((link_to t('edit'), [:edit, record], rel: 'facebox', class: 'btn btn-xs btn-default' if can?(:update, record))) %>
+<%= ::Temple::Utils.escape_html((link_to t('destroy'), record, method: 'delete', data: {confirm: t('confirm')}, rel: 'facebox', class: 'btn btn-xs btn-default' if can?(:destroy, record))) %>

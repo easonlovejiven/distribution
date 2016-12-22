@@ -1,0 +1,206 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+i{
+    font-style: normal;
+}
+ul,li{
+    list-style: none;
+}
+body {font: normal 100% Helvetica, Arial,sans-serif;}
+img { width: 100%;}
+/*fenxiao*/
+.fx-main {
+    background: image-url("fx/fx-bg.jpg");
+    overflow: hidden;
+    -moz-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+
+.fx-logo {
+    margin: 2.5em 1.2em;
+    max-width: 30%;
+}
+
+.fx-tit {
+    max-width: 80%;
+    margin: 0 auto 1em;
+}
+
+.mai-tit-box {
+    text-align: center;
+    input[type="submit"] {
+        background: image-url("fx/ljzc.png");
+        -moz-background-size: 100% 100%;
+        background-size: 100% 100%;
+        border: none;
+        height: 5em;
+        margin-bottom: 8em;
+    }
+}
+
+.min-tit-box {
+    input[type="submit"] {
+        -moz-background-size: 100% 100%;
+        background-size: 100% 100%;
+        border: none;
+        height: 5em;
+        margin-bottom: 8em;
+    }
+}
+
+.fx-sub-tit {
+    font-size: 1.5em;
+    text-align: center;
+    color: #4590F6;
+}
+
+.fx-sub-tit span {
+    font-size: 1.6em;
+    font-style: italic;
+    color: #4590F6;
+}
+
+input {
+    width: 80%;
+    border: 1px solid #242424;
+    border-radius: 5px;
+    height: 2.5em;
+    padding: 0.4em;
+    display: block;
+    margin: 1.5em auto;
+}
+
+.yz-box {
+    overflow: hidden;
+    width: 84%;
+    margin: 0 auto;
+}
+
+.yz-box input {
+    float: left;
+}
+
+.yz-box .yz {
+    width: 40%;
+    margin-right: 5px;
+}
+
+.yz-box .yzm {
+    width: 34%;
+}
+
+@media (max-width: 360px) {
+    input[type="submit"] {
+        height: 3em;
+    }
+}
+
+/*fenxiao2*/
+.mask {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.7;
+}
+
+.in-form {
+    position: absolute;
+    top: 43%;
+    width: 100%;
+    z-index: 10;
+}
+
+.in-yzm {
+    height: 3.5em;
+    background: #c9c9c9;
+    color: #000;
+}
+
+.height {
+    height: 26em;
+}
+
+@media (max-width: 360px) {
+    .height {
+        height: 20em;
+    }
+}
+
+ 
+.in-form input[type="submit"] {
+    background: image-url("fx/wczc.png");
+    -moz-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+
+/*download*/
+.down-logo {
+    margin: 7em auto 0;
+    width: 50%;
+}
+
+.down-tit {
+    margin-top: 3.5em;
+    width: 80%;
+}
+
+.down-btn {
+    display: block;
+    text-align: center;
+    font-size: 1.4em;
+    color: #e54340;
+    text-decoration: none;
+    margin-top: 1.5em;
+    margin-bottom: 6em;
+}
+
+.down-top {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    width: 60%;
+    display: none;
+}
+
+.pop-box {
+    width: 80%;
+    height: 9em;
+    top: 43%;
+    left: 10%;
+    position: absolute;
+    background: #fff;
+    border-radius: 5px;
+    z-index: 10;
+    display: none;
+}
+
+.pop-row {
+    text-align: center;
+    padding: 1.5em 0 1em;
+    margin: 0 1em;
+}
+
+.pop-border {
+    border-bottom: 1px solid #7f7f7f;
+}
+
+.fail {
+    width: 10%;
+    vertical-align: middle;
+}
+
+.pop-row span {
+    margin-left: 0.3em;
+    line-height: 1.2em;
+}
+
+.pop-row a {
+    color: #4a92f3;
+    text-decoration: none;
+    font-size: 1.2em;
+}

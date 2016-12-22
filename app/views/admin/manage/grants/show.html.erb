@@ -1,0 +1,21 @@
+<% @show = !%w[new edit].include?(params[:action]) && @record.valid? %>
+<% @record = @grant %>
+<div class="modal-header">
+  <%= render "admin/modal/header" %>
+</div>
+<%= render 'admin/shared/prompt', record: @record %>
+<% options_class = @show ? {disabled: 'true'} : {} %>
+<%= form_for @grant, url: [:admin, @grant], method: @grant.new_record? ? :post : :put, html: {class: 'form-horizontal'} do |f| %>
+    <% f.options.merge!(options_class: @show ? {disabled: 'true'} : {}) %>
+
+    <div class="modal-body">
+      <%= render 'admin/modal/id', {f: f} if @show %>
+      <%= render 'admin/modal/select_tag', {f: f, field: :editor_id, required: true, options: options_from_collection_for_select(Manage::Editor.active, :id, :name, @grant.editor_id)} %>
+      <%= render 'admin/modal/select_tag', {f: f, field: :role_id, required: true, options: options_from_collection_for_select(Manage::Role.active, :id, :name, @grant.role_id)} %>
+      <%= render 'admin/modal/timestamps', {f: f} if @show %>
+    </div>
+
+    <div class="modal-footer">
+      <%= render 'admin/modal/footer', {f: f} unless @show %>
+    </div>
+<% end %>

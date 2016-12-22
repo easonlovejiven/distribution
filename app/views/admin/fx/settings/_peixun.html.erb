@@ -1,0 +1,19 @@
+<%= form_for @train_fee_setting, as: :setting, :url => admin_fx_setting_path(@setting),
+             :html                   => {:method => :put, :multipart => true, class: "form-horizontal"} do |f| %>
+    <fieldset>
+      <legend>培训</legend>
+      <div class="form-group">
+        <%= f.label :name, '<sup>*</sup>培训奖励费'.html_safe, class: 'col-md-3 control-label' %>
+        <div class="col-md-4">
+          <div class="input-group">
+            <%= text_field_tag "setting[train_fee]", @train_fee_setting.value, {class: 'form-control', required: true} %>
+            <span class="input-group-addon">元</span>
+          </div>
+        </div>
+
+      </div>
+    </fieldset>
+    <div class="form-actions">
+      <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+    </div>
+<% end %>

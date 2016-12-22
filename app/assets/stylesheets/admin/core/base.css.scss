@@ -1,0 +1,255 @@
+.jarviswidget header{
+  .nav-tabs{
+    li a{
+      color: white!important;
+    }
+    li.active a{
+      color: #333!important;
+    }
+  }
+}
+
+#switcher-notifications .row {
+  border-bottom: 1px dashed #aaa;
+}
+
+#switcher-notifications .row .avatar {
+  line-height: 40px;
+  height: 40px;
+  width: 300px;
+  float: left;
+}
+
+#switcher-notifications .row .avatar img {
+  height: 30px;
+  -webkit-border-radius: 50em;
+  -moz-border-radius: 50em;
+  border-radius: 50em;
+  border: 1px solid #e1e6ef;
+  margin: 5px;
+  float: left;
+}
+
+#switcher-notifications .row .avatar div {
+  font-size: 14px;
+  line-height: 26px;
+  font-weight: bold;
+}
+
+#switcher-notifications .row .avatar div {
+  font-size: 14px;
+  line-height: 26px;
+  font-weight: bold;
+}
+
+#switcher-notifications .row .avatar div.read a {
+  color: gray;
+}
+
+.frontpage-notifications-block div.read a {
+  color: gray;
+}
+
+#switcher-notifications .row .avatar small {
+  display: block;
+  line-height: 12px;
+  font-size: 10px;
+  margin-top: -3px;
+}
+
+#switcher-notifications .row .label {
+  margin: 10px 0;
+  float: right;
+}
+
+.x-comment-fieldset {
+  a.delete-comment {
+    display: none;
+  }
+  &:hover {
+    a.delete-comment {
+      display: block;
+    }
+  }
+}
+
+.custom_ul {
+  li {
+    background: #4e7a8c;
+    margin: 5px 5px 0 0;
+    &:hover {
+      background: #4e7a8c;
+    }
+    a {
+      &:hover {
+        background: #275b89;
+      }
+      color: #fff;
+    }
+  }
+}
+
+.notify_content {
+  display: none;
+  margin: 0 2px;
+  color: #fff;
+  background: #474544;
+}
+
+form#search_form .form-group {
+  padding: 3px 0;
+}
+
+ul.office_human_feedbacks_ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  ul {
+    list-style: none;
+    padding-left: 30px;
+  }
+  > li > ul {
+    display: none;
+  }
+  li {
+    font-size: 16px;
+    line-height: 23px;
+    padding: 5px 0;
+    a.btn {
+      display: none;
+      margin-left: 20px;
+    }
+    span {
+      font-style: italic;
+      font-size: 12px;
+      color: grey;
+    }
+    &:hover {
+      > a.btn {
+        display: inline-block;
+      }
+    }
+    ul li:last-child {
+      padding-bottom: 0;
+    }
+  }
+  > li {
+    border-bottom: 1px dashed grey;
+    padding-left: 20px;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.office_human_feedbacks_new_form {
+  padding: 30px 0 0 0;
+  border-bottom: 1px solid #e5e5e5;
+  .modal-footer {
+    border-top: none;
+  }
+  .comment_form_wrapper {
+    padding: 0 20px;
+  }
+}
+
+.search-xs {
+  padding: 1px 10px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+form span.select {
+  position: relative;
+  display: inline-block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px inset #CCCCCC;
+  background: #ffffff none !important;
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -webkit-appearance: textfield;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+
+  & > select {
+    display: block;
+    background: transparent none !important;
+    border: none !important;
+  }
+
+  i {
+    position: absolute;
+    top: 10px;
+    right: 11px;
+    width: 5px;
+    height: 11px;
+    background: #fff;
+    box-shadow: 0 0 0 9px #fff;
+  }
+}
+
+.status_button {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  cursor: default;
+  width: 24px;
+  height: 24px;
+  margin: 1px;
+  opacity: 0.8;
+  border-radius: 999px;
+  transition-property: background-color;
+  background-color: silver;
+  margin-right: 0;
+  &.active {
+    background-color: green;
+  }
+  &.enable {
+    cursor: pointer;
+    &.loading {
+      transition-duration: 0s;
+      cursor: wait;
+      background-color: shade(silver, 50%) !important;
+      &.active {
+        background-color: shade(green, 50%) !important;
+      }
+    }
+  }
+}
+
+#search_form {
+  .input-group {
+    margin-bottom: 3px;
+    label {
+      margin-right: 2px;
+    }
+  }
+}
+
+.dropzone, .dropzone-previews {
+  .dz-preview {
+    .dz-details {
+      margin-bottom: 0;
+    }
+    a.dz-remove, a.dz-remove {
+      margin-top: 4px;
+    }
+  }
+  .dz-uploadBtn {
+    display: inline-block !important;
+    img {
+      width: 114px;
+      height: 150px;
+      margin: 17px;
+      vertical-align: top;
+      border: 1px solid #ccc;
+      padding: 6px;
+      background: rgba(255, 255, 255, .8);
+      -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .16);
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, .16);
+      font-size: 14px;
+    }
+  }
+}

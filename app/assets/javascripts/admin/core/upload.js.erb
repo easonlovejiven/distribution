@@ -1,0 +1,237 @@
+/**
+ * 上传图片对话框逻辑代码,包括tab: 远程图片/上传图片/在线图片/搜索图片
+ * uploadConfig  配置变量 图片上传配置区
+ */
+
+/* 上传图片 */
+(function ($) {
+    function WeimallUpload(options) {
+        var opts = {
+            dropElementId: '',
+            storeDir: "uploads/",
+            dragdrop: true,
+            saveUrl: "/uploads.json",   //服务器保存路径
+            imageMaxSize: '2mb',
+            chunkSize: '4mb',
+            acceptExtensions: [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
+            flashSwfUrl: "<%=asset_path("Moxie.swf")%>"
+        };
+        opts.dropElementId = opts.dropElementId || opts.containerId;
+        this.opts = jQuery.extend(opts, options);
+        this.$wrap = $('#uploadWrap');
+        this.init();
+    }
+
+    WeimallUpload.prototype = {
+        init: function () {
+            this.imageList = [];
+            this.initUploader();
+        },
+        /* 初始化容器 */
+        initUploader: function () {
+            var _this = this,
+                    $wrap = _this.$wrap,
+                    $statusBar = $wrap.find('.statusBar'),
+            // 图片容器
+                    $fileList = $wrap.find('.fileList'),
+            // 上传按钮
+                    $uploadBtn = $wrap.find('#browseButton'),
+            // 没选择文件之前的内容。
+                    $placeHolder = $wrap.find('.placeholder'),
+            // 添加的文件数量
+                    fileCount = 0,
+            // 优化retina, 在retina下这个值是2
+                    ratio = window.devicePixelRatio || 1,
+            // 缩略图大小
+                    thumbnailWidth = 100 * ratio,
+                    thumbnailHeight = 100 * ratio,
+            // 可能有pedding, ready, uploading, confirm, done.
+                    state = '',
+            // 所有文件的进度信息，key为file id
+                    percentages = {},
+            // 图片类型
+                    acceptExtensions = (_this.opts.acceptExtensions || []).join('').replace(/\./g, ',').replace(/^[,]/, ''),
+            // Qiniu实例
+                    uploader = _this.uploader = (new QiniuJsSDK()).uploader({
+                        runtimes: 'html5,flash,html4',
+                        domain: _this.opts.qiniuDomain,
+                        uptoken_url: _this.opts.uptokenUrl,
+                        drop_element: _this.opts.dropElementId,  //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+                        container: _this.opts.containerId,
+                        browse_button: _this.opts.browseButtonId,
+                        dragdrop: true,                   //开启可拖曳上传
+                        chunk_size: '4mb',                //分块上传时，每片的体积
+                        max_retries: 3,                   //上传失败最大重试次数
+                        flash_swf_url: _this.opts.flashSwfUrl,
+                        auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+                        filters: {
+                            max_file_size: _this.opts.imageMaxSize,
+                            mime_types: [
+                                {title: "文件类型", extensions: acceptExtensions}
+                            ]
+                        },
+                        init: {
+                            'FilesAdded': function (up, files) {
+                                plupload.each(files, function (file) {
+                                    fileCount++;
+                                    if (fileCount === 1) {
+                                        $placeHolder.hide();
+                                        $uploadBtn.show();
+                                    }
+                                });
+                                up.refresh();
+                            },
+                            'BeforeUpload': function (up, file) {
+                                // 每个文件上传前,处理相关的事情
+                            },
+                            'UploadProgress': function (up, file) {
+                                // 每个文件上传时,处理相关的事情
+                                updateProgress(file)
+                            },
+                            'FileUploaded': function (up, file, info) {
+                                // 每个文件上传成功后,处理相关的事情
+                                var $file = $('#' + file.id);
+                                info = JSON.parse(info);
+                                //** 上传返回结果 *//
+                                var file_key = info.key;
+                                if (_this.opts.storeDir)
+                                    file_key = file_key.replace(_this.opts.storeDir, "");
+                                info['url'] = info.key;
+                                info['key'] = file_key;
+                                $.ajax({
+                                    url: _this.opts.saveUrl,
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        upload: {
+                                            file_key: file_key,
+                                            file_name: file.name,
+                                            file_type: file.type,
+                                            file_size: file.size || 0
+                                        }
+                                    },
+                                    dataType: 'json',
+                                    success: function (retJson) {
+                                        info['state'] = 'SUCCESS'
+                                    }, error: function () {
+                                        info['state'] = '保存失败!'
+                                    }
+                                });
+                                if (info.state == 'SUCCESS') {
+                                    _this.imageList[file.id] = info;
+                                    displayFile(file, _this.opts.qiniuDomain + info.url)
+                                } else {
+                                    console.log('save failed')
+                                }
+                            },
+                            'Error': function (up, err, errTip) {
+                                //上传出错时,处理相关的事情
+                                setState({info: '上传失败'})
+                            },
+                            'UploadComplete': function () {
+                                uploader.stop();
+                                setState({info: '上传完成'})
+                            },
+                            'Key': function (up, file) {
+                                return _this.opts.storeDir + guidKey() + '.jpg'
+                            }
+                        }
+                    });
+            /* 生成图片key 调整把时间放在前面,按名称倒序 */
+            function guidKey() {
+                var d = new Date().getTime();
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+            }
+
+            // 当有文件添加进来时执行，负责view的创建
+            function displayFile(file, pic) {
+                var fileHtml = '<div id="' + file.id + '" class="dz-preview dz-image-preview">' +
+                                '<div class="dz-details">' +
+                                '<div class="dz-filename"><span>' + file.name + '</span></div>' +
+                                '<div class="imgWarp"></div></div>' +
+                                '<div class="dz-progress"><span class="fileProgress"></span></div>' +
+                                '<div class="dz-success-mark"><span>✔</span></div>' +
+                                '<div class="dz-error-mark"><span>✘</span></div>' +
+                                '<div class="dz-error-message stateMsg"></div>' +
+                                '<a class="dz-remove" href="javascript:;">删除图片</a></div>',
+                        $item = $(fileHtml);
+                $item.find('.imgWarp').html('<img src="' + pic + '" alt="">');
+                $item.find('.dz-remove').on('click', function () {
+                    removeFile(file.id)
+                });
+                $uploadBtn.before($item)
+            }
+
+            function setState(opts) {
+                opts = opts || {};
+                var msg = '已选' + fileCount + '个文件';
+                if (opts['no'])msg += ', 现在上传第' + opts['no'] + '个文件';
+                if (opts['percentage'])msg += ', 上传了' + opts['percentage'] + '%';
+                if (opts['info'])msg += ', ' + opts['info'];
+                $statusBar.html(msg)
+            }
+
+            // 负责view的销毁
+            function removeFile(fileId) {
+                var $item = $('#' + fileId);
+                delete percentages[fileId];
+                $item.off().remove();
+                var file = _this.imageList[fileId];
+//                $.ajax({
+//                    url: _this.opts.saveUrl,
+//                    type: 'delete',
+//                    async: false,
+//                    data: {
+//                        upload: {
+//                            file_key: file_key,
+//                            file_name: file.name,
+//                            file_type: file.type,
+//                            file_size: file.size || 0
+//                        }
+//                    },
+//                    dataType: 'json',
+//                    success: function (retJson) {
+//                        info['state'] = 'SUCCESS'
+//                    }, error: function () {
+//                        info['state'] = '保存失败!'
+//                    }
+//                });
+            }
+
+            function updateProgress(file, percent) {
+                var $file = $('#' + file.id);
+                var percentage = file.percent;
+                percentage = parseInt(percentage, 10);
+                if (file.status !== plupload.DONE && percentage === 100) {
+                    percentage = 99;
+                }
+                setState({no: _this.imageList.indexOf(file.id) + 1, percentage: percentage})
+            }
+
+        },
+        destroy: function () {
+            this.uploader.stop();
+            this.$wrap.remove();
+        },
+        getInsertList: function () {
+            /** 上传完成的图片 **/
+            var i, data, list = [],
+                    prefix = this.opts.qininDomin;
+            for (i = 0; i < this.imageList.length; i++) {
+                data = this.imageList[i];
+                list.push({
+                    src: prefix + data.url + '-content',
+                    _src: prefix + data.url + '-content',
+                    title: data.title,
+                    alt: data.original
+                });
+            }
+            return list;
+        }
+    };
+    window.WeimallUpload = WeimallUpload
+})(jQuery);

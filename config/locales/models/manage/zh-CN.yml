@@ -1,0 +1,9 @@
+zh-CN:
+  activerecord:
+    models:
+      manage: 管理
+      manage/role: 角色
+    attributes:
+      manage/role:
+        name: 名称
+        description: 描述

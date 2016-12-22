@@ -1,0 +1,7 @@
+zh-CN:
+  activerecord:
+    models:
+      "fx/tax_rate": "个人所得税"
+    attributes:
+      "fx/tax_rate":
+        account: 账户

@@ -1,0 +1,93 @@
+<% old_field=field %>
+<% field= "#{nested_filed}_#{old_field}" if defined?(nested_filed) %>
+<div class="form-group" id="<%= field %>_form-group">
+  <%= f.label field, {class: 'col-md-3 control-label'} do %>
+      <%= raw('<sup>*</sup>') if defined?(required) && required %>
+      <%= @record.class.human_attribute_name(field.to_s.gsub("_image", "_pic")) %>
+  <% end %>
+  <div class="col-md-8">
+    <% if !@show %>
+        <div id="<%= field %>_btn_wrap">
+          <a id="<%= field %>_btn" href="#">
+            <i class="icon-c icon-img"></i>
+
+            <div class="btn btn-xs btn-success">上传</div>
+          </a>
+        </div>
+    <% end %>
+    <ul id="<%= field %>_upload_progress" class="fsUploadProgress clearfix max_preview">
+      <% image_action=field.to_s.gsub("_pic", "")+"_image" %>
+      <% unless defined?(nested_filed) %>
+          <% if !@record.try(old_field).blank? %>
+              <li class="progressContainer" data-upload-key="<%= @record.send(old_field) %>">
+                <div class="pic">
+                  <a href="javascript:;" class="remove_btn">x</a>
+
+                  <div class="imgWrapper">
+                    <%= link_to image_tag(@record.send(image_action).url(:thumb)), @record.send(image_action).url, class: "linkWrapper", target: "_blank" %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+      <% else %>
+          <% @record.send(nested_filed).each do |image| %>
+              <li class="progressContainer" data-upload-key="<%= image.send(old_field) %>" data-id="<%= image.id %>">
+                <div class="pic">
+                  <a href="javascript:;" class="remove_btn">x</a>
+
+                  <div class="imgWrapper">
+                    <%= link_to image_tag(image.send("#{old_field}_image").url(:thumb)), image.send("#{old_field}_image").url, class: "linkWrapper", target: "_blank" %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+      <% end %>
+    </ul>
+    <% if defined?(note) %>
+        <span class="note"><%= note %></span>
+    <% end %>
+  </div>
+  <% if defined?(nested_filed) %>
+      <%= hidden_field_tag "#{form_as}[#{nested_filed}_attributes]", "", id: "#{field}_input" %>
+  <% else %>
+      <%= hidden_field_tag "#{form_as}[#{field}]", "", id: "#{field}_input" %>
+  <% end %>
+</div>
+<% if !@show %>
+    <script type="text/javascript">
+        <% field_class={}.merge!(required: true) if defined?(required) && required %>
+        $(function () {
+            $("#<%=field%>_btn").qiniuUpload({
+                domain: "<%=Rails.application.secrets[:qiniu_fx_url]%>",
+                max_files: <%=defined?(max_files) ? max_files : 6%>
+            });
+            $("#<%=field%>_form-group").parents("form").on("submit", function () {
+                var new_upload_keys = [];
+                $(this).find(".submit-btn").addClass("disabled");
+                <% if defined?(nested_filed)%>
+                $("li", "#<%=field%>_form-group").each(function () {
+                    var attrs = {};
+                    attrs['<%=old_field%>'] = $(this).attr("data-upload-key")
+                    $.extend(attrs, {id: $(this).attr("data-id")})
+                    console.log($(this), attrs)
+                    if ($(this).attr("data-destroy") == "1") {
+                        $.extend(attrs, {_destroy: 1})
+                    }
+                    new_upload_keys.push(attrs)
+                });
+                $("#<%=field%>_input").val(JSON.stringify(new_upload_keys))
+                <%else%>
+                $("li", "#<%=field%>_form-group").each(function () {
+                    if ($(this).attr("data-destroy") == "1") {
+                        new_upload_keys.push("")
+                    } else {
+                        new_upload_keys.push($(this).attr("data-upload-key"))
+                    }
+                });
+                $("#<%=field%>_input").val(new_upload_keys);
+                <%end%>
+            })
+        })
+    </script>
+<% end %>
+

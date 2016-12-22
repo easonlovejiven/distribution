@@ -1,0 +1,6 @@
+zh-CN:
+  admin:
+    shared:
+      delete:
+        are_you_sure?: 确定吗？
+        unable_to_delete: 无法删除

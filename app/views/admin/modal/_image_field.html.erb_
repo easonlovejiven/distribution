@@ -1,0 +1,15 @@
+<div class="form-group">
+  <%= f.label field, "图片", {class: 'col-md-3 control-label'} %>
+  <div class="col-md-8">
+    <% if @show == 'show' %>
+        <p id="brand_pic_preview"><%= image_tag(@brand.pic_image.url(:small), :alt => "") %></p>
+    <% else %>
+        <% field_class={class: 'form-control'}.merge!(required: true) if defined?(required) && required %>
+        <%= f.file_field field, field_class%>
+        <%= f.hidden_field field, :value => "", :disabled => true, :id => "#{field}_secondary" %>
+        <%= check_box_tag "#{field}_delete", '1', false, :onchange => "$('#{field}_secondary').attr('disabled', !$(this).attr('checked'));" %>
+        <%= label_tag "#{field}_delete", '删除' %>
+        <p id="brand_pic_preview"><%= image_tag(@brand.pic_image.url(:small), :alt => "") %></p>
+  <% end %>
+  </div>
+</div>

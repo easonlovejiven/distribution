@@ -1,0 +1,23 @@
+  <%= form_for @setting, as: :setting, :url => admin_fx_setting_path(@setting),
+                 :html         => {:method => :put, :multipart => true, class: "form-horizontal"} do |f| %>
+        <fieldset>
+          <legend>分销获利</legend>
+          <div class="form-group">
+            <%= f.label :name, '<sup>*</sup>一级分销获利'.html_safe, class: 'col-md-3 control-label' %>
+            <div class="col-md-4">
+              <%= text_field_tag "setting[apply][limit]", @setting.value[:limit], {class: 'form-control', required: true} %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :name, '<sup>*</sup>二级分销获利'.html_safe, class: 'col-md-3 control-label' %>
+            <div class="col-md-4">
+              <%= text_field_tag "setting[apply][remain]", @setting.value[:remain], {class: 'form-control', required: true} %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+          </div>
+        </fieldset>
+    <% end %>

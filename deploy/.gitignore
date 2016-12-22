@@ -1,0 +1,34 @@
+#----------------------------------------------------------------------------
+# bundler state
+/.bundle
+/vendor/bundle/
+/vendor/ruby/
+#/db/data
+db/*.sqlite3
+/db/*.sqlite3-journal
+/log/*
+/tmp
+config/database.yml
+
+# various artifacts
+**.war
+*.rbc
+*.sassc
+.redcar/
+.sass-cache
+/cache
+/capybara*
+/capybara-*.html
+/gems
+/specifications
+/db/indices
+rerun.txt
+pickle-email-*.html
+.zeus.sock
+
+/node/config.json
+.DS_Store
+/nbproject/
+/*.tmproj
+.env
+.powenv

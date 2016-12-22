@@ -1,0 +1,26 @@
+<% @record = @setting %>
+<% @show = !%w[new edit index].include?(params[:action]) && @record.valid? %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="jarviswidget">
+      <header>
+        <div class="widget-toolbar">
+        </div>
+        <ul class="nav nav-tabs pull-left in" id="myTab">
+          <li class="<%= 'active' if params[:action]=='index' %>">
+            <a href="/admin/fx/settings">
+              <span class="hidden-mobile hidden-tablet">基本设置</span></a>
+          </li>
+
+          <li class="<%= 'active' if params[:action]=='ui' %>">
+            <a href="/admin/fx/settings/ui">
+              <span class="hidden-mobile hidden-tablet">界面设置</span></a>
+          </li>
+        </ul>
+      </header>
+      <div>
+        <%= yield :content %>
+      </div>
+    </div>
+  </div>
+</div>

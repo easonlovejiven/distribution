@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    models:
+      "fx/level": "会员等级"
+    attributes:
+      "fx/level":
+        sort: 等级高低
+        name: 名称

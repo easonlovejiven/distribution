@@ -1,0 +1,67 @@
+<% account = @account
+@page_title = "#{account.class.model_name.human} #{account.id} #{account.name}"
+show = !%w[new edit].include?(params[:action]) && account.valid?
+ %><%= ::Temple::Utils.escape_html((render 'manage/shared/prompt', record: account)) %>
+<div class="col-md-8 col-md-offset-2">
+<h1>
+<span style="float:right;font-size:12px;"><%= ::Temple::Utils.escape_html((render 'actions', record: account if show && account.active?)) %>
+</span><%= ::Temple::Utils.escape_html((t(show ? :show : account.new_record? ? :new : :edit))) %> <%= ::Temple::Utils.escape_html((account.class.model_name.human)) %>
+</h1></div><br class="clear" />
+<% _slim_controls1 = form_for account, url: account, method: account.new_record? ? :post : :put, html: {class: 'form-horizontal', role: 'form'} do |f| %><% _slim_controls2 = ''; 
+; options_class = show ? { disabled: 'true'} : {}
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("clearfix".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ("</div>".freeze); if show
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.label :id, { class: 'col-md-2 control-label' }))).to_s); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.text_field :id, {class: 'form-control'}.merge(options_class)))).to_s); 
+; 
+; _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.label :name, { class: 'col-md-2 control-label' }))).to_s); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.text_field :name, {class: 'form-control'}.merge(options_class)))).to_s); 
+; _slim_controls2 << ("<span".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("help-block".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.error_message_on :name))).to_s); 
+; 
+; _slim_controls2 << ("</span>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.label :gender, { class: 'col-md-2 control-label' }))).to_s); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.select :gender, %w{男 女}.zip(%w{男 女}),{}, { class: 'form-control'}.merge(options_class)))).to_s); 
+; _slim_controls2 << ("<span".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("help-block".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.error_message_on :gender))).to_s); 
+; 
+; _slim_controls2 << ("</span>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.label :birthday, { class: 'col-md-2 control-label' }))).to_s); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("input-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.text_field :birthday, { "data-dateformat" => "dd/mm/yy", class: 'form-control datepicker hasDatepicker'}.merge(options_class)))).to_s); 
+; _slim_controls2 << ("<span".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("input-group-addon".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ("<i".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("fa".freeze); _slim_controls2 << (" ".freeze); _slim_controls2 << ("fa-calendar".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ("</i>".freeze); _slim_controls2 << ("</span>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("<span".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("help-block".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.error_message_on :birthday))).to_s); 
+; 
+; _slim_controls2 << ("</span>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); if show
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.label :login_at, { class: 'col-md-2 control-label' }))).to_s); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.text_field :login_at, { class: 'form-control'}.merge(options_class)))).to_s); 
+; _slim_controls2 << ("<span".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("help-block".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.error_message_on :login_at))).to_s); 
+; 
+; _slim_controls2 << ("</span>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); end; if show
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.label :created_at, { class: 'col-md-2 control-label' }))).to_s); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.text_field :created_at, { class: 'form-control'}.merge(options_class)))).to_s); 
+; _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.label :updated_at, { class: 'col-md-2 control-label' }))).to_s); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.text_field :updated_at, { class: 'form-control'}.merge(options_class)))).to_s); 
+; 
+; _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); end; unless show
+; _slim_controls2 << ("<fieldset".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("form-group".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-2".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("<div".freeze); _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ("col-md-8".freeze); _slim_controls2 << ("\"".freeze); _slim_controls2 << (">".freeze); 
+; _slim_controls2 << ((::Temple::Utils.escape_html((f.submit class:'btn btn-primary'))).to_s); 
+; _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</div>".freeze); _slim_controls2 << ("</fieldset>".freeze); end; _slim_controls2 %><% end %><%= ::Temple::Utils.escape_html((_slim_controls1)) %>

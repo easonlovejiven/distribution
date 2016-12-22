@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    models:
+      "fx/employee": "员工"
+    attributes:
+      "fx/employee":
+        role: 角色
+        name: 名称

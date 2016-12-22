@@ -1,0 +1,1 @@
+span.editable data={ url: url_for([:manage, record]), field: "#{record.class.name.downcase.gsub('::','_')}[#{field}]" } = record.send(field)

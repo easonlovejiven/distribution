@@ -1,0 +1,12 @@
+<div class="btn-group">
+  <%= button_tag :class => 'btn btn-xs btn-default dropdown-toggle', "data-toggle" => "dropdown", "aria-expanded" => "false" do %>
+      导出<span class="caret"></span>
+  <% end %>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <% export_formats.map { |format| [format.upcase, format] }.each do |item| %>
+        <li>
+          <a href="<%= request.path+"?"+request.params.merge({format: item[1]}).to_param %>" target="_blank"><%= item[0] %></a>
+        </li>
+    <% end %>
+  </ul>
+</div>

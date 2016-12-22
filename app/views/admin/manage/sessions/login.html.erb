@@ -1,0 +1,96 @@
+TEST
+<html>
+<head>
+  <meta/>
+  <title>后台管理系统</title>
+  <%= stylesheet_link_tag "manage/login" %>
+  <%= javascript_include_tag "manage/login" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="login">
+<div id="login">
+  <h1>
+    <%= link_to '', auction_root_path %>
+  </h1>
+
+  <div id="login_error" style="display:none;">帐号信息填写错误</div>
+  <div id="session_area">
+    <div id="basic_login_area">
+      <%= form_tag admin_manange_session_path, :id => "new_session_form" do %>
+          <%= hidden_field_tag 'redirect', (redirect ||= params[:redirect] || manage_root_path) %>
+          <p>
+            <label>
+              帐号<br/>
+              <input class="input" id="user_email" type="text" name="account[login]" value="" placeholder="请填写帐号" size="20" tabindex="10">
+            </label>
+          </p>
+
+          <p>
+            <label>
+              密码
+              <input class="input" id="user_pass" type="password" name="account[password]" value="" placeholder="请填写密码" size="20" tabindex="20">
+            </label>
+          </p>
+
+          <p class="forgetmenot">
+            <label>
+              <input id="rememberme" name="rememberme" type="checkbox" value="forever" checked="checked" tabindex="90">
+              记住我
+            </label>
+          </p>
+
+          <p class="submit">
+            <input id="wp-submit" type="submit" name="wp-submit" value="登录" tabindex="100">
+          </p>
+      <% end %>
+    </div>
+    <p id="nav">
+      <%= link_to '登录', '#ldap_area', :id => 'ldap_login' %>
+      |
+      <%= link_to '注册', new_core_account_path(:redirect => request.fullpath) %>
+      |
+      <%= link_to '忘记密码？', new_core_session_path, :title => '找回密码' %>
+    </p>
+  </div>
+  <div id="ldap_area" style="display:none;">
+    <%= form_tag manage_manage_sessions_path, :id => "ldap_form" do %>
+        <%= hidden_field_tag 'redirect', (redirect ||= params[:redirect] || manage_root_path) %>
+        <p>
+          <label>
+            帐号
+            <br/>
+            <input class="input" id="ldap_email" type="text" name="account[login]" value="" placeholder="请输入邮箱前缀" size="10" tabindex="10">
+          </label>
+        </p>
+
+        <p>
+          <label>
+            密码
+            <input class="input" id="user_pass" type="password" name="account[password]" value="" placeholder="请填写密码"
+                   size="20" tabindex="20">
+          </label>
+        </p>
+
+        <p class="forgetmenot">
+          <label>
+            <input id="rememberme" name="rememberme" type="checkbox" value="forever" checked="checked" tabindex="90">
+            记住我
+          </label>
+        </p>
+
+        <p class="submit">
+          <input id="wp-submit" type="submit" name="wp-submit" value="登录" tabindex="100">
+        </p>
+    <% end %>
+    <p id="nav">
+      <%= link_to '账号登录', '#session_area', :id => 'original_login' %>
+    </p>
+  </div>
+</div>
+<p id="backtoblog">
+  <%= link_to auction_root_path, :title => '你迷失了吗？' do %>
+      &laquo; 返回
+  <% end %>
+</p>
+</body>
+</html>

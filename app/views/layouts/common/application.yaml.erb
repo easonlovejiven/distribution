@@ -1,0 +1,2 @@
+<% ActiveRecord::Base.include_root_in_json = false %>
+<%= raw JSON.parse((@data||{}).to_json).ya2yaml %>

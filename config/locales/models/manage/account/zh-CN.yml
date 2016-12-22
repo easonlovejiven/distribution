@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    models:
+      "manage/account": 用户
+    attributes:
+      "manage/account":
+        name: 名称
+        birthday: 生日
+        login_at: 登录时间
+        gender: 性别
+        pic: 头像

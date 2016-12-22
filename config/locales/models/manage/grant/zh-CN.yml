@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    models:
+      "manage/grant": 授予
+    attributes:
+      "manage/grant":
+        editor_id: 编辑
+        role_id: 角色

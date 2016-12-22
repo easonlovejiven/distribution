@@ -1,0 +1,30 @@
+<% field_class = {id: 'fileUpload', class: 'form-control btn btn-default'}.merge!(f.options[:options_class]) %>
+<% image ||= nil %>
+<fieldset>
+  <div class="form-group">
+    <%= f.label field, class: 'col-md-3 control-label' do -%>
+        <%= raw('<sup>*</sup>') if defined?(required) && required %>
+        <%= model.human_attribute_name(field) %>
+    <% end -%>
+
+    <div class="col-md-8">
+      <% if show %>
+          <% if record.file.blank? %>
+              <label class="control-label">无</label>
+          <% else %>
+              <%= link_to record.file.original_filename + ' 点击查看或下载', record.file.url, target: '_blank' %>
+          <% end %>
+      <% else %>
+          <%= f.file_field field, field_class %>
+
+          <p class="help-block">
+            请选择格式为word / excel / pdf / jpg的文件!
+          </p>
+          <img id="preview"/>
+      <% end %>
+    </div>
+
+  </div>
+</fieldset>
+
+<%= javascript_include_tag 'admin/modal/_file_field' %>

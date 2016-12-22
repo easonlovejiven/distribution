@@ -1,0 +1,84 @@
+<% content_for :content do %>
+    <%= form_for @setting, as: :setting, :url => admin_fx_setting_path(@setting),
+                 :html => {:method => :put, :multipart => true, class: "form-horizontal"} do |f| %>
+        <table class="table">
+          <thead>
+          <tr>
+            <td>图片</td>
+            <td>链接</td>
+            <td>操作</td>
+          </tr>
+          </thead>
+          <tbody>
+
+          <%@posters.each_with_index do |poster,index|%>
+              <tr class="first upload_item" data-upload-id="<%=index+1%>_pic">
+                <td>
+                  <img id="<%=index+1%>_pic_preview" class="pic_preview" src="<%=get_img_url(poster[:pic])%>" width="100px" height="100px"/>
+                  <div id="container">
+                    <div class="fieldset flash" id="<%=index+1%>_pic_upload_progress">
+                      <a class="btn-flat white" id="<%=index+1%>_pic_pickfiles">图片上传</a>
+                    </div>
+                  </div>
+                  <%= hidden_field_tag "setting[poster][][pic]", poster[:pic],id: "#{index+1}_pic_value", :class => "span5 pic_value" %></td>
+                <td><%= text_field_tag "setting[poster][][url]", poster[:url], class: "span12" %> </td>
+                <td><a href="javascript:void(0);" class="span3 btn-glow primary remove_line">删除</a></td>
+              </tr>
+          <%end%>
+          </tbody>
+        </table>
+        <div class="form-actions">
+           <span class="span5">
+                <a href="javascript:void(0);" id="add_line" class="span3 btn-glow primary">添加一行</a>
+             </span>
+          <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+        </div>
+    <% end %>
+
+    <script type="text/template" id="temp-tr">
+      <tr class="first">
+        <td>
+          <img id="" class="pic_preview" src="" width="100px" height="100px"/>
+          <div id="container">
+            <div class="fieldset flash" id="upload_progress">
+              <a class="btn-flat white" id="pickfiles">图片上传</a>
+            </div>
+          </div>
+          <%= hidden_field_tag "setting[poster][][pic]", nil,id: "", :class => "span5 pic_value" %></td>
+        <td><%= text_field_tag "setting[poster][][url]", nil, class: "span12" %> </td>
+        <td><a href="javascript:void(0);" class="span3 btn-glow primary remove_line">删除</a></td>
+      </tr>
+    </script>
+
+    <script type="text/javascript">
+        var upToken = "<%=uptoken%>";
+        var url = 'http://upload.qiniu.com';
+        $(function () {
+            $("#add_line").click(function () {
+                var temp_tr = $($("#temp-tr").html());
+                var current_index=$("table tbody tr").length+1;
+                temp_tr.attr("data-num",current_index);
+                var pic_id=current_index+"_pic";
+                $(".pic_preview",temp_tr).attr("id",pic_id+"_preview");
+                var upload_process_id=pic_id+"_upload_progress";
+                var pickfiles_id=pic_id+"_pickfiles";
+                var pic_value=pic_id+"_value";
+                $(".flash",temp_tr).attr("id",upload_process_id);
+                $(".white",temp_tr).attr("id",pickfiles_id);
+                $(".pic_value",temp_tr).attr("id",pic_value);
+                $("table tbody").append(temp_tr);
+                hzb.plupload(url, upToken, pic_id);
+            });
+            $("body").delegate(".remove_line", "click", function () {
+                $(this).parents("tr").remove()
+            })
+
+            $(".upload_item").each(function(){
+                var pic_id=$(this).attr("data-upload-id");
+                hzb.plupload(url, upToken, pic_id);
+            })
+
+        });
+    </script>
+<% end %>
+<%= render :template => "admin/fx/settings/layout" %>

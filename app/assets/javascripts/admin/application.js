@@ -1,0 +1,41 @@
+//= require core/jquery-1.9.1.min
+//= require core/jquery-migrate-1.2.1
+//= require core/jquery_ujs
+//= require core/bootstrap.min
+//= require core/underscore-min.js
+/**/
+//= require plugins/handlebars-v1.3.0
+//= require plugins/date
+/* plupload*/
+//= require plugins/plupload/moxie
+//= require plugins/plupload.full.min
+//= require plugins/fileprogress
+/* validate */
+//= require plugins/jquery.validate/jquery.validate
+//= require plugins/jquery.validate/additional-methods
+//= require plugins/jquery.string
+//= require plugins/jquery.scrollTo
+/* modal */
+//= require plugins/jquery.facebox
+//= require plugins/bootstrap-modal/bootstrap-modal
+//= require plugins/bootstrap-modal/bootstrap-modalmanager
+/* other */
+//= require plugins/jquery.uniform.min
+//= require plugins/jquery.backstretch
+//= require plugins/jquery.slimscroll
+//= require plugins/bootstrap-editable.min
+//= require plugins/pluralize
+//= require plugins/toastr.min
+//= require plugins/bootbox
+//= require plugins/bootstrap-select.min
+//= require plugins/bootstrap-typeahead/typeahead.bundle
+//= require plugins/select2/select2.min
+//= require plugins/select2/select2_locale_zh-CN
+//= require plugins/bootstrap-datepicker/bootstrap-datetimepicker
+//= require plugins/bootstrap-datepicker/bootstrap-datetimepicker.zh-CN
+/* base */
+//= require admin/core/helper
+//= require admin/core/base
+//= require_tree ./pages
+//= require hzb
+

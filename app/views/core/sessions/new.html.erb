@@ -1,0 +1,18 @@
+<%#= stylesheet_link_tag    'login','signup',  media: 'all', 'data-turbolinks-track' => true %>
+
+<%#= stylesheet_link_tag 'signup', media: 'all', 'data-turbolinks-track' => true %>
+<div class="fx-main">
+    <%= image_tag "fx/fx-logo.png", class: "fx-logo" %>
+      <div class="min-tit-box signup-box">
+          <%= image_tag "fx/fx-tit.png", class: "fx-tit" %>
+            <div class="fx-sub-tit">北京市共招募终身合伙人</div>
+            <div class="fx-sub-tit"><span>1000</span>名</div>
+            <%= form_tag core_sessions_path,:remote=>true,html: {autocomplete: "off"}  do%>
+              <%=text_field_tag :account,nil, :class => "number", :placeholder => "请输入手机号码" %>
+              <%=password_field_tag :password, :class => "number", :placeholder => "登录密码" %>
+              <input type="submit" name="commit" value="" class="login"/>
+            <% end %>
+        </div>
+    </div>
+
+

@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    models:
+      "fx/trade": "分销订单"
+    attributes:
+      "fx/trade":
+        number: 订单号
+        name: 名称

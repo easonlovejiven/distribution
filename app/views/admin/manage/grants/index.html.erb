@@ -1,0 +1,60 @@
+<section>
+  <div class="row">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="jarviswidget">
+        <header>
+          <span class="widget-icon"><i class="fa fa-table"></i></span>
+
+          <h2>授权列表</h2>
+
+          <div class="widget-toolbar">
+            <%= link_to raw('<i class="fa fa-plus-circle"></i> ' + t('new')), new_admin_manage_grant_path, class: 'btn btn-xs btn-success', data: {target: 'rightPanel'} if can?(:create, Manage::Grant) %>
+          </div>
+        </header>
+        <div>
+          <div class="widget-body-toolbar">
+            <%= form_tag request.path, method: 'get', id: 'search_form', class: 'form-inline' do %>
+                <fieldset>
+                  <%= render 'admin/shared/search/basic', field: 'id', kv: search_field_kv(:id) %>
+                  <%= render 'admin/shared/search/select', field: 'editor_id', kv: search_field_kv(:editor_id), options: Manage::Editor.active %>
+                  <%= render 'admin/shared/search/select', field: 'role_id', kv: search_field_kv(:role_id), options: Manage::Role.active %>
+                  <%= render 'admin/shared/search/page' %>
+                  <%= submit_tag t(:search), name: nil, class: 'btn search-xs btn-success' %>
+                  <%= link_to t(:reset), request.path, class: 'btn search-xs btn-default', data: {remote: true} %>
+                </fieldset>
+            <% end %>
+          </div>
+          <div class="widget-body no-padding">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                  <% %i{ id editor_id role_id created_at creator_id }.each do |field| %>
+                      <th><%= Manage::Grant.human_attribute_name(field) %></th>
+                  <% end %>
+                  <th><%= t 'actions' %></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @grants.each do |record| %>
+                    <tr>
+                      <td><%= link_to record.id, 'where[id]' => record.id %></td>
+                      <td><%= record.tries(:editor, :name) %></td>
+                      <td><%= record.tries(:role, :name) %></td>
+                      <td><%= datetime_tag record.created_at %></td>
+                      <td class="actions"><%= render 'admin/shared/actions', record: record %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+
+              <div class="dt-toolbar-footer">
+                <%= render 'admin/shared/pagination', object: @grants %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

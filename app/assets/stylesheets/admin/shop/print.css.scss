@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+
+html{color:#000;}
+body{font-size:12px;color:#333;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0; font-family:'微软雅黑','Microsoft YaHei',tahoma,arial,"宋体";}
+table{border-collapse:collapse;border-spacing:0;}
+img{border:0;}
+li{list-style:none;}
+strong{font-weight:bold;}
+h1, h2, h3, h4, h5, h6, ul, p,blockquote,ol,dl { padding:0;}
+h1, .h1{font-size:20px;  font-weight:bold; font-style: normal;}
+h2, .h2{font-size:16px; font-weight:bold; font-style: normal;}
+h3, .h3{font-size:16px; font-weight:bold; font-style: normal;}
+h4, .h4{font-size:16px; font-weight:normal; font-style: normal;}
+h5, .h5{font-size:14px; font-weight:bold; font-style: normal;}
+h6, .h6{font-size:12px; font-weight:normal;  font-style: normal;}
+table{font-size:inherit;font:100%;}
+th, td{vertical-align: middle}
+.hide { display:none;}
+.elimination { text-decoration: line-through; }
+
+
+.content { display:block; margin:20px; padding-top:70px; position:relative; }
+.content .logo { position:absolute; top:10px; right:0; width:165px; height:77px; }
+.content .barcode { position:absolute; top:0; left:0; color:#777;}
+.headertitle { text-align:center; font-size:20px; font-weight:bold; padding:20px 0;}
+.detailsinfo strong { font-size:14px;}
+.detailsinfo p{ padding:3px 0; font-size:14px;}
+.detailsinfo p.root span { display:inline-block; width:49%; }
+.detailsinfo p.user span { display:inline-block; width:33%; }
+.detailsinfo p.root { border-bottom:1px solid #000; margin-bottom:10px; padding-bottom:5px;}
+.detailsinfo p.root .youbian { text-align:right;}
+
+.listinfo {}
+.listinfo h2 { font-size:16px; font-weight:bold; padding:5px 0;}
+.listinfo table { width:100%;}
+.listinfo td ,
+.listinfo th { border:1px solid #000; padding:5px; text-align: center;}
+.listinfo .box1 { width:130px;}
+.listinfo .box3 { width:30px;}
+.listinfo .box4 { width:60px;}
+.listinfo .box5 { width:60px;}
+.listinfo .box6 { width:60px;}
+.listinfo .box7 { width:60px;}
+.listinfo .box8 { width:60px;}
+
+
+.helpinfo { border-bottom:1px #000 dashed; border-top:1px #000 dashed; padding:10px 0; margin:10px 0;}
+.helpinfo p{ padding:2px 0;}
+
+.pymentinfo { padding:10px 0;}
+.pymentinfo table { width:100%;}
+.pymentinfo .amount { width:300px; text-align:right;}
+
+.footerinfo { display:block; margin-top:2px; padding-top:10px; border-top:1px solid #000; overflow: hidden;}
+.footerinfo h3{ font-size:16px; font-weight:bold; padding-top:5px;}
+.footerinfo p{ font-size:14px; font-weight:bold; padding:2px 0;}
+
+.button { margin:30px 20px 20px 20px;}
+.button input { padding:2px 10px; }
+
+.code_pic { display: block; float: right;}
+.code_pic .title { display: block; float: left; width: 236px; height: 133px; /*background: url(./skin/code_title.png) no-repeat 0 0;*/}
+.code_pic .pic { display: block; float: left; width: 124px; height: 124px; padding: 5px 0 5px 5px;}
+.code_pic .pic img { display: block; width: 124px; height: 124px; padding: 0;}
+

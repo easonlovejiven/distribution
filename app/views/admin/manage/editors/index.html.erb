@@ -1,0 +1,67 @@
+<% @records=@editors %>
+<section>
+  <div class="row">
+    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="jarviswidget">
+        <header>
+          <span class="widget-icon"><i class="fa fa-table"></i></span>
+
+          <h2><%= "#{model.model_name.human}#{t(:index)}" %></h2>
+
+          <div class="widget-toolbar">
+            <%= link_to raw('<i class="fa fa-plus-circle"></i> ' + t('new')), new_admin_manage_editor_path, class: 'btn btn-xs btn-default', data: {target: 'rightPanel'} if can?(:create, Manage::Editor) %>
+          </div>
+        </header>
+        <div>
+          <div class="widget-body-toolbar">
+            <%= form_tag request.path, method: 'get', id: 'search_form', class: 'form-inline' do %>
+                <fieldset>
+                  <%= render 'admin/shared/search/basic', field: 'id', kv: search_field_kv(:id) %>
+                  <%= render 'admin/shared/search/basic', field: 'name', kv: search_field_kv(:name) %>
+                  <%#= render 'admin/shared/search/select', field: 'department_id', options: Office::Human::Department.active %>
+                  <%= render 'admin/shared/search/basic', field: 'role_id', options: Manage::Role.active, kv: search_field_kv(:role_id) %>
+                  <%#= render 'admin/shared/search/order', fields: %w[name prefix department_id role_id],kv: search_field_kv(:role_id)  %>
+                  <%= render 'admin/shared/search/page' %>
+                  <%= submit_tag t(:search), name: nil, class: 'btn search-xs btn-success' %>
+                  <%= link_to t(:reset), request.path, class: 'btn search-xs btn-default', data: {remote: true} %>
+                </fieldset>
+            <% end %>
+          </div>
+          <div class="widget-body no-padding">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                  <% %i{ id name role_id created_at }.each do |field| %>
+                      <th><%= Manage::Editor.human_attribute_name(field) %></th>
+                  <% end %>
+                  <th><%= t 'actions' %></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @records.each do |record| %>
+                    <tr>
+                      <td><%= record.id %></td>
+                      <td><%= record.name %></td>
+                      <td><%= link_to_if can?(:show, record.role), h(record.tries(:role, :name)), [:admin, record.role], data: {target: 'rightPanel'} if record.role %>
+                      </td>
+                      <td><%= record.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+                      <td class="actions">
+                        <%= render 'admin/shared/actions', record: record %>
+                        <%#= link_to t('change_password'), password_manage_user_path(record.id), data: {target: 'rightPanel', }, class: 'btn btn-xs btn-info' if can?(:admin, record) %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              <div class="dt-toolbar-footer">
+                <%= render 'admin/shared/pagination', object: @records %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+<%= javascript_include_tag 'admin/editors/editors' %>

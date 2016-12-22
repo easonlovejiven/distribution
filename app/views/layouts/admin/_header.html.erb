@@ -1,0 +1,43 @@
+<div id="logo-group">
+  <span id="logo"><%= image_tag nil,alt: "分销系统后台" %></span>
+	<span id="activity" class="activity-dropdown">
+		<i class="fa fa-user"></i>
+      <!--<b class="badge"><%#= @current_user.notifications.not_read.active.count %></b>-->
+	</span>
+</div>
+
+<div class="pull-right">
+  <div id="hide-menu" class="btn-header pull-right">
+    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+  </div>
+
+  <div id="logout" class="btn-header transparent pull-right">
+    <span>
+      <%= link_to logout_path(nil, :redirect => "/admin"), :method => "get", title: "退出", "data-confirm" => "您确定要退出管理系统吗？" do %>
+        <i class="fa fa-sign-out"></i>
+      <% end %>
+    </span>
+  </div>
+
+  <!--<div id="system_feedbacks" class="btn-header transparent pull-right">-->
+		<!--<span>-->
+			<!--<a href="<%#= office_human_feedbacks_path %>" title="我要反馈" data-remote=true><i class="fa fa-comments"></i></a>-->
+		<!--</span>-->
+  <!--</div>-->
+
+  <div class="btn-header transparent pull-right" style="line-height: 49px;">
+    <span>上次登录时间：<%#= (@current_user.login_at||Time.now).to_s(:db) %></span>
+  </div>
+</div>
+<script>
+    $(function () {
+        $("a.notif_toggle").on('click', function () {
+            var this_link = $(this);
+            this_link.parents('div.notif-wrapper').find('.notify_content').toggle();
+        });
+        $('#logout a').on("ajax:success", function () {
+            window.location.href = "/admin";
+        })
+    });
+</script>
+

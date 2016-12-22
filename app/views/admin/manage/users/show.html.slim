@@ -1,0 +1,75 @@
+- user = @record
+- @page_title = "#{user.class.model_name.human} #{user.id} #{user.name}"
+- @show = !%w[new edit].include?(params[:action]) && user.valid?
+= render 'manage/shared/prompt', record: user
+br.clear
+= form_for user, url: [:admin, :user], method: user.new_record? ? :post : :put, html: {id: 'togglingForm', class: 'form-horizontal', role: 'form'} do |f|
+	- options_class = @show ? { disabled: 'true'} : {}
+	.clearfix
+	- if @show
+		.form-group
+			= f.label :id, { class: 'col-md-2 control-label' }
+			.col-md-8
+				= f.text_field :id, {class: 'form-control'}.merge(options_class)
+
+	.form-group
+		= f.label :name, { class: 'col-md-2 control-label' }
+		.col-md-8
+			= f.text_field :name, {class: 'form-control'}.merge({ disabled: 'true'})
+			span.help-block
+				= f.error_message_on :name
+	.form-group
+		= f.label :email, { class: 'col-md-2 control-label' }
+		.col-md-8
+			= f.text_field :email, {class: 'form-control'}.merge({ disabled: 'true'})
+			span.help-block
+				= f.error_message_on :email
+
+	.form-group
+		= f.label :gender, { class: 'col-md-2 control-label' }
+		.col-md-8
+			= f.select :gender, options_for_select(Manage::User::GENDER.invert, user.gender),{}, { class: 'form-control'}.merge(options_class)
+			span.help-block
+				= f.error_message_on :gender
+
+	.form-group
+		= f.label :birthday, { class: 'col-md-2 control-label' }
+		.col-md-8
+			.input-group
+				= f.text_field :birthday, {class: 'form-control', value: f.object.send(:birthday).try(:strftime, '%Y-%m-%d'), data: {provide: 'datepicker-inline'}}.merge(options_class)
+			span.help-block
+				= f.error_message_on :birthday
+	.form-group
+		= f.label :pic, { class: 'col-md-2 control-label' }
+		.col-md-8
+			= render 'manage/shared/file_field', show: @show, record: user, f: f, field: 'pic', image: { width: 128, height: 128 }
+			span.help-block
+				= f.error_message_on :pic
+
+	- if @show
+		.form-group
+			= f.label :login_at, { class: 'col-md-2 control-label' }
+			.col-md-8
+				= f.text_field :login_at, { class: 'form-control'}.merge(options_class)
+				span.help-block
+					= f.error_message_on :login_at
+
+	- if @show
+		.form-group
+			= f.label :created_at, { class: 'col-md-2 control-label' }
+			.col-md-8
+				= f.text_field :created_at, { class: 'form-control'}.merge(options_class)
+		.form-group
+			= f.label :updated_at, { class: 'col-md-2 control-label' }
+			.col-md-8
+				= f.text_field :updated_at, { class: 'form-control'}.merge(options_class)
+
+	.modal-footer
+		- unless @show
+	   		= render 'modal/footer', {f: f}
+
+- if @show
+	center
+		.btn-group
+			= link_to t(:edit)+t(user.class.model_name.human), edit_manage_user_path(user.id), class: 'btn btn-primary', data: {target: 'rightPanel'}
+			= link_to t(:update_password), password_manage_user_path(user.id), class: 'btn btn-primary',data: {target: 'rightPanel'}

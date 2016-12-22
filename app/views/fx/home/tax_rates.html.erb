@@ -1,0 +1,33 @@
+<header class="top_bar clearfix">
+    <div class="common">
+        <a href="/" class="top_img"><%=image_tag("fx/back.png")%></a>
+        <span class="top_size">个人所得税详情</span>
+        
+    </div>
+</header>
+<!--内容-->
+<main>
+    <div class="consume" style="background-color: #FFAD4D;">
+        <span class="consume_size">个人所得税总额</span>
+        <span class="consume_pay"> <%=format_price(@user.tax_amount)%></span>
+    </div>
+
+    <%@tax_rates.each do |rate|%>
+      <div class="tax clearfix">
+          <div class="tax_brand f_left">
+              <span class="brand_timer">·<%=rate.date%></span>
+              <span class="brand_money">记税金额   <%=format_price(rate.total_amount)%></span>
+          </div>
+          <div class="tax_pay f_right">
+              <%if rate.state == 1%>
+                <span class="pay_none" style="color: #89D46D;">已缴</span>
+              <%else%>
+                <span class="pay_none" >未缴</span>
+              <%end%>
+              <span class="pay_money">应缴税金  <%=format_price(rate.amount)%></span>
+          </div>
+
+      </div> 
+    <%end%>
+
+</main>

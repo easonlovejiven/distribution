@@ -1,0 +1,38 @@
+<% @record = @employee %>
+<% @show = !%w[new edit].include?(params[:action]) %>
+<div class="modal-header">
+  <%= render "admin/modal/header" %>
+</div>
+<%= render 'admin/shared/prompt' %>
+<div class="modal-body">
+  <%= form_for @employee, as: :employee, :url => @employee.new_record? ? admin_fx_employees_path : admin_fx_employee_path(@employee),
+               :html          => {:method => @employee.new_record? ? :post : :put, :multipart => true, class: "form-horizontal"} do |f| %>
+
+      <div class="form-group">
+        <%= f.label :id, '用户ID<sup>*</sup>'.html_safe, {class: 'col-md-3 control-label'} %>
+        <% if @show %>
+            <div class="col-md-6 form-control-static">
+              <%= @employee.id %>
+            </div>
+        <% else %>
+            <div class="col-md-6">
+              <%= f.text_field :id, {class: 'form-control', required: true} %>
+            </div>
+        <% end %>
+
+      </div>
+      <%= render 'admin/modal/text_field', {f: f, field: "name", required: true} %>
+
+      <%= render 'admin/modal/select_tag', {f: f, field: :role, required: true, options: options_for_select(Fx::Employee.role_name_percent.invert, @employee.role), value: @employee.role} %>
+
+      <div class="form-actions">
+        <% if @show %>
+            <%= link_to '查看', admin_fx_employee_path(@employee), class: "btn btn-primary", "data-target" => "rightPanel" %>
+            <%= link_to '编辑', edit_admin_fx_employee_path(@employee), class: "btn btn-primary", "data-target" => "rightPanel" if can?(:update, :employee) %>
+            <%= link_to '删除', admin_fx_employee_path(@employee), class: "btn btn-primary", :confirm => "确定删除吗？", :method => :delete if can?(:delete, :employee) %>
+        <% else %>
+            <input type="submit" value="提交" id="addusersub" name="adduser" class="btn btn-primary"/>
+        <% end %>
+      </div>
+  <% end %>
+</div>

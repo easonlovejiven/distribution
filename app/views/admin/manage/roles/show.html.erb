@@ -1,0 +1,118 @@
+<% @record = @role %>
+<% @show = !(%w[new edit].include?(params[:action])) && @record.valid? %>
+<%= render 'admin/shared/prompt', record: @record %>
+<% options_class = @show ? {disabled: 'true'} : {} %>
+
+<%= form_for @record, url: [:admin, @record], method: @record.new_record? ? :post : :put, html: {id: 'togglingForm', class: 'form-horizontal'} do |f| %>
+    <% f.options.merge!(options_class: options_class) %>
+
+    <div class="modal-body">
+      <% if @show %>
+          <fieldset>
+            <div class="form-group">
+              <%= f.label :id, 'ID', {class: 'col-md-1 control-label'} %>
+
+              <div class="col-md-4 form-control-static">
+                <%= @record.id %>
+              </div>
+            </div>
+          </fieldset>
+      <% end %>
+      <div class="form-group">
+        <%= f.label :name, '<sup>*</sup>名称'.html_safe, class: 'col-md-1 control-label' %>
+        <div class="col-md-4">
+          <% if @show %>
+              <div class="form-control-static">
+                <%= @record.name %>
+              </div>
+          <% else %>
+              <%= f.text_field :name, {class: 'form-control', required: true} %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :description, '描述'.html_safe, class: 'col-md-1 control-label' %>
+        <div class="col-md-8">
+          <% if @show %>
+              <div class="form-control-static">
+                <%= @record.description %>
+              </div>
+          <% else %>
+              <%= f.text_area :description, {class: 'form-control', rows: 3} %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :role, '<sup>*</sup> 权限'.html_safe, {class: 'col-md-1 control-label', id: 'margin-left-text'} %>
+
+        <div id="main-select" class="col-sm-11">
+          <fieldset>
+            <div id="rowall" class="row">
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colall', class: 'checkbox in-control-all'}.merge(options_class) %>
+                <span>全选/反</span>
+              </label>
+
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colIndex', class: 'checkbox in-control-index col'}.merge(options_class) %>
+                <span>列表</span>
+              </label>
+
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colShow', class: 'checkbox in-control-show col'}.merge(options_class) %>
+                <span>显示</span>
+              </label>
+
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colCreate', class: 'checkbox in-control-create col'}.merge(options_class) %>
+                <span>创建</span>
+              </label>
+
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colUpdate', class: 'checkbox in-control-update col'}.merge(options_class) %>
+                <span>更新</span>
+              </label>
+
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colDestory', class: 'checkbox in-control-destory col'}.merge(options_class) %>
+                <span>删除</span>
+              </label>
+
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colPublish', class: 'checkbox in-control-publish col'}.merge(options_class) %>
+                <span>发布</span>
+              </label>
+
+              <label class="checkbox-inline">
+                <%= check_box_tag '', '', false, {id: 'colManage', class: 'checkbox in-control-manage col'}.merge(options_class) %>
+                <span>管理</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <% @record.attributes.slice(*@record.class.const_get('RESOURCES')).each do |field, ids| %>
+              <div class="alert group-role">
+                <div class="row">
+                  <label class="control-label">
+                    <%= check_box_tag '', '', false, {class: 'checkbox all row', 'data-name' => "#{field}"}.merge(options_class) %>
+                    <span><%= t(field.to_s) %></span>
+                  </label>
+                </div>
+                <%= f.hidden_field field, {id: "#{field}_num"} %>
+                <% @record.class.const_get('FUNCTIONS').each do |num, action| %>
+                    <label class="checkbox-inline">
+                      <%= check_box_tag field, num, @record.get_manage_attrs(ids).include?(num), disabled: @show, class: "checkbox action_role #{field}", id: '', action: field, style: 'color:silver', name: "#{field}_num" %>
+                      <span><%= [t(".#{action}".to_sym), t(field)].join %></span>
+                    </label>
+                <% end %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+      <%= render 'admin/modal/timestamps', {f: f} if @show %>
+    </div>
+    <%= render 'admin/modal/role_footer', {f: f} unless @show %>
+    <%= javascript_include_tag 'admin/manage/roles' %>
+<% end %>

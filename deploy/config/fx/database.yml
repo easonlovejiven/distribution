@@ -1,0 +1,48 @@
+default: &default
+  adapter: mysql2
+  reconnect: false
+  pool: 5
+  username: root
+  password: ""
+  host: localhost
+
+development:
+  <<: *default
+
+production:
+  adapter: mysql2
+  database: fx
+  host: localhost
+  username: root
+  password: Yuukoudb321
+  encoding: utf8
+  pool: 30
+  socket: /tmp/mysql.sock
+
+test:
+  adapter: mysql2
+  database: fx_test
+  host: localhost
+  username: root
+  password: 123456
+  encoding: utf8
+  socket: /tmp/mysql.sock
+
+core:
+  development:
+    adapter: mysql2
+    database: hzb_dev
+    host: localhost
+    username: root
+    password: 123456
+    encoding: utf8
+    socket: /tmp/mysql.sock
+  production:
+    adapter: mysql2
+    database: hzb
+    host: localhost
+    username: root
+    password: Yuukoudb321
+    encoding: utf8
+    socket: /tmp/mysql.sock
+

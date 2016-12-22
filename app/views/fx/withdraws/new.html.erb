@@ -1,0 +1,52 @@
+<header class="top_bar clearfix" style="background: #FFFFFF;">
+    <div class="common" style="border:2px solid #C3C3C3">
+        <a href="/" class="top_img"><%=image_tag("fx/back.png")%>  </a>
+        <span class="top_code">余额转出</span>
+       <!-- <a href="/fx/withdraws" class="top_detail f_right">转出明细</a>-->
+    </div>
+</header>
+<%= form_for(@withdraw, :url => fx_withdraws_path, :html => {remote: true}) do |form| %>
+  <main class="balance">
+      <div class="balance_num">
+          <span class="num_id">账号</span>
+          <span class="num_card">
+              <input type="text" name="bank_account" class="num_card"  placeholder="请输入银行卡号"/>
+          </span>
+      </div>
+      <div class="balance_num">
+          <span class="num_id">开户名</span>
+          <span class="num_card">
+              <input type="text" name="user_name"  class="num_card" placeholder="请输入银行开户名称"/>
+          </span>
+      </div>
+      <div class="balance_num">
+          <span class="num_id">开户行</span>
+          <span class="num_card">
+              <input type="text" name="bank_name" class="num_card"  placeholder="请输入银行名称"/>
+          </span>
+      </div>
+      <div class="balance_num">
+          <span class="num_id">转出金额</span>
+          <span class="num_card">
+              <input type="text" class="num_card" name="price"  placeholder="最少转出100元"/>
+          </span>
+      </div>
+
+      <div class="balance_num">
+          <span class="num_id">密码</span>
+          <span class="num_card">
+              <input type="password" name="account_password" class="num_card"  placeholder="请输入会付宝支付密码"/>
+          </span>
+      </div>
+ 
+
+      <p>转出金额将在T+2个工作日到帐</p>
+      <div class="balance_input">
+          <input type="submit" value="确认转出"/>
+      </div>
+      <!--<div class="balance_remark">
+          <p>备注：</p>
+          <p>每月5日后可转出余额</p>
+      </div>-->
+  </main>
+<%end%>

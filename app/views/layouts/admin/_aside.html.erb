@@ -1,0 +1,41 @@
+<div class="login-info">
+	<span> <!-- User image size is adjusted inside CSS, it should stay as is -->
+		<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+          <%#= image_tag @current_user.pic || "missing.jpg", alt: "me", class: "online" %>
+          <span>您好：<%#= @current_user.editor.name %></span>
+          <i class="fa fa-angle-down"></i>
+        </a>
+	</span>
+</div>
+
+<nav>
+  <ul>
+    <li class="<%= "active" if @current_tab=="home" %>">
+      <a href="/admin/home" target="_self">
+        <i class="fa fa-lg fa-fw fa-home"></i>
+        <span class="menu-item-parent">首页</span>
+      </a>
+    </li>
+
+    <li class="active open">
+      <a href="#"><i class="fa fa-lg fa-fw fa-key"></i><span class="menu-item-parent">分销管理</span></a>
+      <ul style="display: block;">
+        <li class="<%= "active" if @current_tab=="user" %>"><a href="/admin/fx/users"><i ></i>全部分销商</a></li>
+        <!-- <li class="<%= "active" if @current_tab=="employee" %>"><a href="/admin/fx/employees"><i ></i>内部员工</a></li> -->
+        <li class="<%= "active" if @current_tab=="level" %>"><a href="/admin/fx/levels"><i ></i>用户等级</a></li>
+        <li class="<%= "active" if @current_tab=="trade" %>"><a href="/admin/fx/trades"><i ></i>分销订单</a></li>
+        <li class="<%= "active" if @current_tab=="invite" %>"><a href="/admin/fx/invites"><i ></i>邀请记录</a></li>
+        <li class="<%= "active" if @current_tab=="tax_rate" %>"><a href="/admin/fx/tax_rates"><i ></i>获利结算</a></li>
+        <li class="<%= "active" if @current_tab=="setting" %>"><a href="/admin/fx/settings"><i ></i>分销设置</a></li>
+      </ul>
+    </li>
+
+    <li class="active open">
+      <a href="#"><i class="fa fa-lg fa-fw fa-key"></i><span class="menu-item-parent">权限管理</span></a>
+      <ul style="display: block;">
+        <li><%= link_to raw('<i class="fa fa-user"></i> 管理员'), admin_manage_editors_path %></li>
+        <li><%= link_to raw('<i class="fa fa-child"></i> 角色'), admin_manage_roles_path %></li>
+      </ul>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,64 @@
+/! widget grid
+section#widget-grid
+  .row
+    article.col-xs-12.col-sm-12.col-md-12.col-lg-12
+      br.clear
+        .ui-tabs-panel
+          = form_tag request.path, method: 'get', id: 'search_form' do
+            | &nbsp;|&nbsp;
+            = render 'manage/shared/search/array', field: 'id'
+            = render 'manage/shared/search/like', field: 'name'
+            = render 'manage/shared/search/range', field: 'created_at'
+            = render 'manage/shared/search/range', field: 'updated_at'
+            = render 'manage/shared/search/order', fields: %w[name]
+            = render 'manage/shared/search/page'
+            = submit_tag t(:search), name: nil, class: 'btn btn-primary'
+      /! Widget ID (each widget will need unique ID)
+      .jarviswidget.jarviswidget-color-darken data-widget-editbutton="false"
+        header
+          span.widget-icon
+            i.fa.fa-table
+          h2
+            = "#{model.model_name.human} #{t(:index)} (#{@users.total_count})"
+            - if can?(:create, User)
+              span style="margin-left: 30px"
+                = link_to t('new'), new_manage_user_path, class: 'btn btn-xs btn-warning'
+        /! widget div
+        - if @users.blank?
+          p.alert.alert-info.no-margin = t(:no_data)
+        - else
+          div
+            /! widget edit box
+            .jarviswidget-editbox
+            /! This area used as dropdown edit box
+            /! end widget edit box
+            /! widget content
+            .widget-body.no-padding
+              table#dt_basic.table.table-striped.table-bordered.table-hover width="100%"
+                thead
+                  - %w[id pic name gender birthday login_at created_at].each do |field|
+                    th
+                      i.fa.fa-fw.fa-user.text-muted.hidden-md.hidden-sm.hidden-xs
+                      = model.human_attribute_name(field)
+                  th
+                    i.fa.fa-fw.fa-user.text-muted.hidden-md.hidden-sm.hidden-xs
+                    = t 'actions'
+                tbody
+                  - @users.each do |user|
+                    tr
+                      td = link_to user.id, manage_user_path(user)
+                      td = image_tag("#{user.pic}.small.jpg") if user.pic.present?
+                      td = user.name
+                      td = user.gender
+                      td = user.birthday
+                      td = user.login_at
+                      td = datetime_tag user.created_at
+                      td = render 'actions', record: user
+        /! end widget content
+        /! end widget div
+        .dt-toolbar-footer
+          .col-sm-6.col-xs-12.hidden-xs
+          .col-sm-6.col-xs-12
+            = render 'manage/shared/pagination', records: @users
+              /! end widget
+

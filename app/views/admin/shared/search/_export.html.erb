@@ -1,0 +1,6 @@
+<%- unless (exports ||= []).blank? %>
+    <%= label_tag 'export', t('.export') %>
+    <%= select_tag 'export', options_for_select([nil] + exports.map { |export| [t(".#{export}"), export] }) %>
+    <%= label_tag 'format', t('.format') %>
+    <%= select_tag 'format', options_for_select([nil] + (formats ||= %w[xls csv tsv]).map { |format| [format.upcase, format] }) %>
+<% end %>

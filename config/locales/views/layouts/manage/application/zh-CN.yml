@@ -1,0 +1,8 @@
+zh-CN:
+  layouts:
+    manage:
+      application:
+        administration_system: 管理系统
+        hello: 你好
+        log_out: 注销
+        home: 首页
